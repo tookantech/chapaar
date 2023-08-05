@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Aryala7\Chapaar\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class ChapaarCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'chapaar';
 
     public $description = 'My command';
 
