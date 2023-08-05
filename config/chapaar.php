@@ -5,7 +5,7 @@ return [
         'kavenegar' => [
             'api_key' => '',
             'line_number' => '',
-            'template' => ''
+            'template' => '',
         ],
-    ]
+    ],
 ];

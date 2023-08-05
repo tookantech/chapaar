@@ -7,8 +7,7 @@ use Aryala7\Chapaar\Contracts\DriverConnector;
 
 class KavenegarSender extends DriverSender
 {
-
-    public function send(array $args):void
+    public function send(array $args): void
     {
         // TODO: Implement send() method.
     }
