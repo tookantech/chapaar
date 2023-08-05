@@ -2,9 +2,9 @@
 
 namespace Aryala7\Chapaar\Tests;
 
+use Aryala7\Chapaar\ChapaarServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Aryala7\Chapaar\ChapaarServiceProvider;
 
 class TestCase extends Orchestra
 {

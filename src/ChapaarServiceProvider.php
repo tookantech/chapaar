@@ -2,9 +2,9 @@
 
 namespace Aryala7\Chapaar;
 
+use Aryala7\Chapaar\Commands\ChapaarCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Aryala7\Chapaar\Commands\ChapaarCommand;
 
 class ChapaarServiceProvider extends PackageServiceProvider
 {
