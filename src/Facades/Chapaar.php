@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @see \Aryala7\Chapaar\Chapaar
+ * @method handle
  */
 class Chapaar extends Facade
 {
