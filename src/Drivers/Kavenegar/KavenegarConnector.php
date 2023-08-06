@@ -18,10 +18,9 @@ class KavenegarConnector implements DriverConnector
     protected $client;
 
     protected string $content = '';
-    public function __construct(string $content)
+    public function __construct()
     {
         $this->client = (new Client());
-        $this->content = $content;
         $this->setting = (object) config('chapaar.drivers.kavenegar');
     }
 
@@ -51,6 +50,12 @@ class KavenegarConnector implements DriverConnector
     {
         return $this->content;
     }
+
+    public function setContent(string $content)
+    {
+         $this->content = $content;
+        return $this;
+    }
     public function send()
     {
         $url = self::generatePath();
@@ -74,22 +79,12 @@ class KavenegarConnector implements DriverConnector
     {
         return [
             'receptor' => $this->getReceptor(),
-            'message' => $this->content,
+            'message' => $this->getContent(),
             'sender' => $this->setting->line_number,
             'date' => null,
             'type' => null,
             'local' => null,
 //            'hide' => ''
         ];
-    }
-
-    public function setContent()
-    {
-        // TODO: Implement setContent() method.
-    }
-
-    public function setReceptors()
-    {
-        // TODO: Implement setReceptors() method.
     }
 }

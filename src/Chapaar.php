@@ -26,7 +26,7 @@ class Chapaar
     }
     public function handle(DriverSender $sender): void
     {
-        dd($sender);
+//        dd($sender);
         $sender->send($this->getData());
     }
 
