@@ -11,6 +11,8 @@ abstract class DriverSender
     public function send(array $args): void
     {
         $driver = $this->getDriver();
+        $driver->setContent($args['content']);
+        $driver->setReceptor($args['receptor']);
         $driver->send();
     }
 }

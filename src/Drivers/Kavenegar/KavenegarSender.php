@@ -7,13 +7,17 @@ use Aryala7\Chapaar\Contracts\DriverConnector;
 
 class KavenegarSender extends DriverSender
 {
-    public function send(array $args): void
+
+
+    protected string $content;
+
+    public function __construct(string $content)
     {
-        // TODO: Implement send() method.
+        $this->content = $content;
     }
 
     public function getDriver(): DriverConnector
     {
-        return new KavenegarConnector();
+        return new KavenegarConnector($this->content);
     }
 }

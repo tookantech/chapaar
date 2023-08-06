@@ -3,11 +3,31 @@
 namespace Aryala7\Chapaar;
 
 use Aryala7\Chapaar\Abstracts\DriverSender;
+use Aryala7\Chapaar\Contracts\DriverConnector;
 
 class Chapaar
 {
-    public function handle(DriverSender $driver)
+    public array $data = [];
+    protected DriverConnector $via;
+
+    /**
+     * @param array $data
+     * @return $this
+     */
+    public function setData(array $data): static
     {
-        $driver->send([]);
+        $this->data = $data;
+        return $this;
     }
+
+    public function getData()
+    {
+        return $this->data;
+    }
+    public function handle(DriverSender $sender): void
+    {
+        dd($sender);
+        $sender->send($this->getData());
+    }
+
 }
