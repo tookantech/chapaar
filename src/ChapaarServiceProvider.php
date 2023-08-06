@@ -2,7 +2,6 @@
 
 namespace Aryala7\Chapaar;
 
-use Aryala7\Chapaar\Commands\ChapaarCommand;
 use Aryala7\Chapaar\Drivers\Kavenegar\KavenegarChannel;
 use Aryala7\Chapaar\Drivers\Kavenegar\KavenegarConnector;
 use Spatie\LaravelPackageTools\Package;

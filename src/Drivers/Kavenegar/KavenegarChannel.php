@@ -1,14 +1,15 @@
 <?php
 
 namespace Aryala7\Chapaar\Drivers\Kavenegar;
+
 use Illuminate\Notifications\Notification;
+
 class KavenegarChannel
 {
     protected $api;
 
     /**
      * KavenegarChannel constructor.
-     * @param KavenegarConnector $api
      */
     public function __construct(KavenegarConnector $api)
     {
@@ -18,8 +19,7 @@ class KavenegarChannel
     /**
      * Send the given notification.
      *
-     * @param  mixed $notifiable
-     * @param Notification $notification
+     * @param  mixed  $notifiable
      * @return void
      */
     public function send($notifiable, Notification $notification)
