@@ -7,8 +7,6 @@ use Aryala7\Chapaar\Contracts\DriverConnector;
 
 class KavenegarSender extends DriverSender
 {
-
-
     protected string $content;
 
     public function __construct(string $content)
