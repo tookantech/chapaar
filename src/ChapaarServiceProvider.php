@@ -21,7 +21,7 @@ class ChapaarServiceProvider extends PackageServiceProvider
          *
          * More info: https://github.com/spatie/laravel-package-tools
          */
-        Notification::extend('sms',function($app){
+        Notification::extend('sms', function ($app) {
             return new SmsChannel();
         });
         $package

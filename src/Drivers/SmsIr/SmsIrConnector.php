@@ -11,11 +11,12 @@ use Illuminate\Http\Response;
 
 class SmsIrConnector implements DriverConnector
 {
+    const PATH = 'https://api.sms.ir/%s/%s/%s';
 
-    const PATH = "https://api.sms.ir/%s/%s/%s";
+    protected array|string $receptor = '';
 
-    protected array|string $receptor ='';
     protected object $setting;
+
     protected $client;
 
     protected string $content = '';
@@ -24,25 +25,24 @@ class SmsIrConnector implements DriverConnector
     {
         $this->client = new Client([
             'base_uri' => self::PATH,
-            'headers' =>[
+            'headers' => [
                 'X-API-KEY' => config('chapaar.drivers.smsir.api_key'),
                 'ACCEPT' => 'application/json',
-                'Content-Type' => 'application/json'
-            ]
+                'Content-Type' => 'application/json',
+            ],
         ]);
         $this->setting = (object) config('chapaar.drivers.smsir');
     }
 
-    public function generatePath($method,$base='send'):string
+    public function generatePath($method, $base = 'send'): string
     {
-        return sprintf(self::PATH,$this->setting->version, $base, $method);
+        return sprintf(self::PATH, $this->setting->version, $base, $method);
     }
-
-
 
     public function setReceptor(array|string $receptor): static
     {
         $this->receptor = is_array($receptor) ?: [$receptor];
+
         return $this;
     }
 
@@ -58,20 +58,23 @@ class SmsIrConnector implements DriverConnector
 
     public function setContent(string $content)
     {
-         $this->content = $content;
+        $this->content = $content;
+
         return $this;
     }
+
     public function send(DriverMessage $message)
     {
         $url = self::generatePath('bulk');
         $this->setReceptor($message->to);
         $params = [
-            'lineNumber' => $message->from?:$this->setting->line_number,
+            'lineNumber' => $message->from ?: $this->setting->line_number,
             'MessageText' => $message->content,
             'Mobiles' => $this->getReceptor(),
-            'SendDateTime' =>  $message->dateTime ?? NULL
+            'SendDateTime' => $message->dateTime ?? null,
         ];
-        return $this->performApi($url,$params);
+
+        return $this->performApi($url, $params);
     }
 
     public function verify(DriverMessage $message)
@@ -79,18 +82,21 @@ class SmsIrConnector implements DriverConnector
         $url = self::generatePath('verify');
         $params = [
             'Mobile' => $message->to,
-            "TemplateId" => $message->template,
-            "Parameters" => $message->tokens
+            'TemplateId' => $message->template,
+            'Parameters' => $message->tokens,
         ];
-        return $this->performApi($url,$params);
-       
+
+        return $this->performApi($url, $params);
+
     }
 
     public function performApi(string $url, array $params)
     {
-        $response = $this->client->post($url,$params);
-        return $this->processApiResponse($response);        
+        $response = $this->client->post($url, $params);
+
+        return $this->processApiResponse($response);
     }
+
     protected function processApiResponse($response)
     {
         $status_code = $response->getStatusCode();
@@ -104,16 +110,15 @@ class SmsIrConnector implements DriverConnector
     protected function validateResponseStatus($status_code, $json_response)
     {
         if ($status_code !== Response::HTTP_OK) {
-            throw new HttpException("Request has errors", $status_code);
+            throw new HttpException('Request has errors', $status_code);
         }
 
         if ($json_response === null) {
-            throw new HttpException("Response is not valid JSON", $status_code);
+            throw new HttpException('Response is not valid JSON', $status_code);
         }
 
         if ($json_response->status !== 1) {
             throw new ApiException($json_response->return->message, $json_response->return->status);
         }
     }
-
 }

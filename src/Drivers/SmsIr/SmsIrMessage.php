@@ -6,5 +6,4 @@ use Aryala7\Chapaar\SmsMessage;
 
 class SmsIrMessage extends SmsMessage
 {
-    
 }

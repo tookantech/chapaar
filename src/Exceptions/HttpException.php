@@ -4,10 +4,8 @@ namespace Aryala7\Chapaar\Exceptions;
 
 class HttpException extends BaseException
 {
-	public function getName()
+    public function getName()
     {
         return 'HttpException';
-    }	
+    }
 }
-
-?>

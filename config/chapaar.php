@@ -1,8 +1,7 @@
 <?php
 
 return [
-    'default' => env('CHAPAAR_DRIVER','kavenegar'),
-
+    'default' => env('CHAPAAR_DRIVER', 'kavenegar'),
 
     'drivers' => [
         'kavenegar' => [

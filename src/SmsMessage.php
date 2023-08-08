@@ -8,29 +8,25 @@ use Aryala7\Chapaar\Drivers\SmsIr\SmsIrMessage;
 
 class SmsMessage implements DriverMessage
 {
-
-    
-
     public function __construct()
     {
         $this->driver = config('chapaar.default');
-        $this->setting = config('chapaar.drivers.'.$this->driver);    
+        $this->setting = config('chapaar.drivers.'.$this->driver);
     }
 
     public function __destruct()
     {
-        
-        return match($this->driver){
+
+        return match ($this->driver) {
             'kavenegar' => KavenegarMessage::class,
             'smsir' => SmsIrMessage::class
-        };      
+        };
     }
-
-
 
     protected object $setting;
 
-    protected string $driver ='';
+    protected string $driver = '';
+
     /**
      * The message content.
      *
@@ -61,22 +57,24 @@ class SmsMessage implements DriverMessage
 
     public array $tokens = [];
 
-
     public function withTokens(array $tokens)
     {
         $this->tokens = $tokens;
+
         return $this;
     }
 
     public function template(string $template)
     {
         $this->template = $template;
+
         return $this;
     }
-        /**
+
+    /**
      * Set the message content.
      *
-     * @param string $content
+     * @param  string  $content
      * @return $this
      */
     public function content($content)
@@ -89,7 +87,7 @@ class SmsMessage implements DriverMessage
     /**
      * Set the phone number the message should be sent from.
      *
-     * @param string $from
+     * @param  string  $from
      * @return $this
      */
     public function from($from)
@@ -102,7 +100,7 @@ class SmsMessage implements DriverMessage
     /**
      * Set the phone number the message should be received to.
      *
-     * @param string $to
+     * @param  string  $to
      * @return $this
      */
     public function to($to)
@@ -111,5 +109,4 @@ class SmsMessage implements DriverMessage
 
         return $this;
     }
-    
 }

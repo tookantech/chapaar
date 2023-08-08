@@ -4,10 +4,8 @@ namespace Aryala7\Chapaar\Exceptions;
 
 class ApiException extends BaseException
 {
-	public function getName()
+    public function getName()
     {
         return 'ApiException';
     }
 }
-
-?>
