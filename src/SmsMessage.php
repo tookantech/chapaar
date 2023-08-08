@@ -8,7 +8,6 @@ use Aryala7\Chapaar\Drivers\SmsIr\SmsIrMessage;
 
 class SmsMessage implements DriverMessage
 {
-    
     public function __destruct()
     {
 

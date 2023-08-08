@@ -18,7 +18,7 @@ class SmsChannel
     {
         $this->driver = Chapaar::getDefaultDriver();
         $defaultDriverName = config('chapaar.default');
-        $this->setting = (object)config("chapaar.drivers.$defaultDriverName");
+        $this->setting = (object) config("chapaar.drivers.$defaultDriverName");
     }
 
     public function send($notifiable, $notification)
