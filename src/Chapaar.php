@@ -20,13 +20,15 @@ class Chapaar
         };
     }
 
-    public function send(DriverConnector $driver, DriverMessage $message)
+    public function send(DriverMessage $message)
     {
+        $driver = $this->getDefaultDriver();
         return $driver->send($message);
     }
 
-    public function verify(DriverConnector $driver, DriverMessage $message)
+    public function verify(DriverMessage $message)
     {
+        $driver = $this->getDefaultDriver();
         return $driver->verify($message);
     }
 }

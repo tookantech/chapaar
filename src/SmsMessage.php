@@ -8,16 +8,11 @@ use Aryala7\Chapaar\Drivers\SmsIr\SmsIrMessage;
 
 class SmsMessage implements DriverMessage
 {
-    public function __construct()
-    {
-        $this->driver = config('chapaar.default');
-        $this->setting = config('chapaar.drivers.'.$this->driver);
-    }
-
+    
     public function __destruct()
     {
 
-        return match ($this->driver) {
+        return match (config('chapaar.default')) {
             'kavenegar' => KavenegarMessage::class,
             'smsir' => SmsIrMessage::class
         };

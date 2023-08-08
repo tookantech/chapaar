@@ -7,7 +7,7 @@ return [
         'kavenegar' => [
             'method' => 'post',
             'scheme' => 'http',
-            'api_key' => '',
+            'api_key' => '7959394764735A684E4364617358613568585973716E5368326C7A7675537463627773506738464E716F513D',
             'line_number' => '1000689696',
             'template' => '',
         ],

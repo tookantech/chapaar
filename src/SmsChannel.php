@@ -17,13 +17,15 @@ class SmsChannel
     public function __construct()
     {
         $this->driver = Chapaar::getDefaultDriver();
-        $this->setting = config('chapaar.drivers.'.$this->driver);
+        $defaultDriverName = config('chapaar.default');
+        $this->setting = (object)config("chapaar.drivers.$defaultDriverName");
     }
 
     public function send($notifiable, $notification)
     {
 
         $message = $notification->toSms($notifiable);
+
         $message->to($message->to ?: $notifiable->routeNotificationFor('sms', $notification));
         if (! $message->to || ! ($message->from || $message->template)) {
             return;
