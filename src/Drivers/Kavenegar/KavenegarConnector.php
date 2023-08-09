@@ -51,7 +51,7 @@ class KavenegarConnector implements DriverConnector
 
     public function send(DriverMessage $message)
     {
-        $url = self::generatePath('sms');
+        $url = self::generatePath('send');
         $this->setReceptor($message->to);
         $params = [
             'receptor' => $this->receptor,
@@ -86,8 +86,9 @@ class KavenegarConnector implements DriverConnector
     public function performApi(string $url, array $params)
     {
         $response = $this->client->post($url, [
-            'form_params' => http_build_query($params),
+            'form_params' => $params,
         ]);
+        dd($response);
 
         return $this->processApiResponse($response);
     }

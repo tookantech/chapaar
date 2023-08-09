@@ -5,15 +5,10 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/aryala7/chapaar/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/aryala7/chapaar/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/aryala7/chapaar.svg?style=flat-square)](https://packagist.org/packages/aryala7/chapaar)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+This package provides a flexible way to send and verify messages through various SMS providers. It offers integration with multiple drivers, making it easy to use different SMS service providers without getting locked into a specific one.
 
 ## Support us
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/chapaar.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/chapaar)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
 
 ## Installation
 
@@ -23,37 +18,73 @@ You can install the package via composer:
 composer require aryala7/chapaar
 ```
 
-You can publish and run the migrations with:
 
-```bash
-php artisan vendor:publish --tag="chapaar-migrations"
-php artisan migrate
-```
+## Configuration
 
 You can publish the config file with:
 
 ```bash
 php artisan vendor:publish --tag="chapaar-config"
 ```
+This will create a chapaar.php configuration file in your config directory, where you can set the default driver and configure driver-specific settings.
 
 This is the contents of the published config file:
-
 ```php
 return [
+    'default' => env('CHAPAAR_DRIVER', 'kavenegar'),
+
+    'drivers' => [
+        'kavenegar' => [
+            'method' => 'post',
+            'scheme' => 'http',
+            'api_key' => '',
+            'line_number' => '1000689696',
+            'template' => '',
+        ],
+        'smsir' => [
+            'version' => 'v1',
+            'api_key' => '',
+            'line_number' => '1000689696',
+            'template_id' => '',
+        ],
+    ],
 ];
-```
 
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="chapaar-views"
 ```
 
 ## Usage
+Using the Chapaar Facade
 
+If you want to use the Chapaar package without Laravel's built-in notification system, you can utilize the Chapaar facade directly. This allows you to send and verify messages using different SMS providers.
+
+Sending a Simple Message
 ```php
-$chapaar = new Aryala7\Chapaar();
-echo $chapaar->echoPhrase('Hello, Aryala7!');
+use Aryala7\Chapaar\Facades\Chapaar;
+use Aryala7\Chapaar\Drivers\Kavenegar\KavenegarMessage;
+
+$message = new KavenegarMessage(); // Replace with your message implementation
+$message->to('recipient_number')
+    ->content('Hello, this is a test message.');
+
+$response = Chapaar::send($message);
+// Handle the response as needed
+
+```
+
+Sending With Template Message
+```php
+use Aryala7\Chapaar\Facades\Chapaar;
+use Aryala7\Chapaar\Drivers\Kavenegar\KavenegarMessage;
+
+$message = new KavenegarMessage(); // Replace with your message implementation
+$message
+    ->template("invoice-paid")
+    ->to('recipient_number')
+    ->tokens(['tokens']);
+
+$response = Chapaar::verify($message);
+// Handle the response as needed
+
 ```
 
 ## Testing

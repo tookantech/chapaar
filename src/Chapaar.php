@@ -2,7 +2,6 @@
 
 namespace Aryala7\Chapaar;
 
-use Aryala7\Chapaar\Contracts\DriverConnector;
 use Aryala7\Chapaar\Contracts\DriverMessage;
 use Aryala7\Chapaar\Drivers\Kavenegar\KavenegarConnector;
 use Aryala7\Chapaar\Drivers\SmsIr\SmsIrConnector;
@@ -20,13 +19,17 @@ class Chapaar
         };
     }
 
-    public function send(DriverConnector $driver, DriverMessage $message)
+    public function send(DriverMessage $message)
     {
+        $driver = $this->getDefaultDriver();
+
         return $driver->send($message);
     }
 
-    public function verify(DriverConnector $driver, DriverMessage $message)
+    public function verify(DriverMessage $message)
     {
+        $driver = $this->getDefaultDriver();
+
         return $driver->verify($message);
     }
 }
