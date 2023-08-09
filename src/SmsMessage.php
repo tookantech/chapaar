@@ -20,8 +20,8 @@ class SmsMessage
         $this->message_driver = match ($default_driver) {
             'kavenegar' => KavenegarMessage::class,
             'smsir' => SmsIrMessage::class,
-            default => function(){
-                throw new DriverNotFoundException('Unknown Driver' . config('chapaar.default'));
+            default => function () {
+                throw new DriverNotFoundException('Unknown Driver'.config('chapaar.default'));
             }
         };
     }
