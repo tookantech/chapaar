@@ -3,21 +3,17 @@
 namespace Aryala7\Chapaar\Drivers\Kavenegar;
 
 use Aryala7\Chapaar\Contracts\DriverConnector;
-use Aryala7\Chapaar\Contracts\DriverMessage;
 use Aryala7\Chapaar\Exceptions\ApiException;
 use Aryala7\Chapaar\Exceptions\HttpException;
 use GuzzleHttp\Client;
-use Illuminate\Http\Response;
+use GuzzleHttp\Exception\GuzzleException;
+use Symfony\Component\HttpFoundation\Response;
 
 class KavenegarConnector implements DriverConnector
 {
-    const PATH = '%s://api.kavenegar.com/v1/%s/%s/%s.json/';
-
-    protected string $receptor = '';
-
     protected object $setting;
 
-    protected $client;
+    protected Client $client;
 
     public function __construct()
     {
@@ -33,76 +29,93 @@ class KavenegarConnector implements DriverConnector
         $this->setting = (object) config('chapaar.drivers.kavenegar');
     }
 
-    public function generatePath($method, $base = 'sms'): string
+    /**
+     * @param $method
+     * @param string $base
+     * @return string
+     */
+    public function generatePath($method, string $base = 'sms'): string
     {
-        return sprintf(self::PATH, $this->setting->scheme, $this->setting->api_key, $base, $method);
+        return sprintf($this->setting->url, $this->setting->scheme, $this->setting->api_key, $base, $method);
     }
 
-    public function setReceptor(array|string $receptor): static
-    {
-        if (is_array($receptor)) {
-            $this->receptor = implode(',', $receptor);
-        } else {
-            $this->receptor = $receptor;
-        }
 
-        return $this;
-    }
-
-    public function send(DriverMessage $message)
+    /**
+     * @param KavenegarMessage $message
+     * @return object
+     * @throws GuzzleException
+     */
+    public function send($message): object
     {
-        $url = self::generatePath('send');
-        $this->setReceptor($message->to);
+        $url = $this->generatePath('send');
         $params = [
-            'receptor' => $this->receptor,
-            'message' => $message->content,
-            'sender' => $message->from ?: $this->setting->line_number,
-            'date' => $optionalTokens['date'] ?? null,
-            'type' => $optionalTokens['type'] ?? null,
-            'localid' => $optionalTokens['localid'] ?? null,
+            'receptor' => $message->getTo(),
+            'message' => $message->getContent(),
+            'sender' => $message->getFrom() ?: $this->setting->line_number,
+            'date' => $message->getDate() ?? NULL,
+            'type' => $message->getType() ?? NULL,
+            'localid' => $message->getLocalId() ?? NULL,
         ];
 
         return $this->performApi($url, $params);
     }
 
-    public function verify(DriverMessage $message)
+    /**
+     * @param  KavenegarMessage $message
+     * @return object
+     * @throws GuzzleException
+     */
+    public function verify($message): object
     {
-        $url = self::generatePath('lookup', 'verify');
-        $this->setReceptor($message->to);
+        $url = $this->generatePath('lookup', 'verify');
         $params = [
-            'receptor' => $this->receptor,
-            'template' => $message->template,
-            'token' => $message->tokens[0],
-            'token2' => $message->tokens[1] ?? null,
-            'token3' => $message->tokens[2] ?? null,
-            'token10' => $message->tokens[3] ?? null,
-            'token20' => $message->tokens[4] ?? null,
-            'type' => $message->type ?? null,
+            'receptor' => $message->getTo(),
+            'template' => $message->getTemplate(),
+            'token' => $message->getTokens()[0],
+            'token2' => $message->getTokens()[1] ?? NULL,
+            'token3' => $message->getTokens()[2] ?? NULL,
+            'token10' => $message->getTokens()[3] ?? NULL,
+            'token20' => $message->getTokens()[4] ?? NULL,
+            'type' => $message->getType() ?? NULL,
         ];
 
         return $this->performApi($url, $params);
     }
 
-    public function performApi(string $url, array $params)
+    /**
+     * @param string $url
+     * @param array $params
+     * @return object
+     * @throws GuzzleException
+     */
+    public function performApi(string $url, array $params):object
     {
         $response = $this->client->post($url, [
             'form_params' => $params,
         ]);
-        dd($response);
         return $this->processApiResponse($response);
     }
 
-    protected function processApiResponse($response)
+    /**
+     * @param $response
+     * @return object
+     */
+    protected function processApiResponse($response):object
     {
         $status_code = $response->getStatusCode();
         $json_response = json_decode($response->getBody()->getContents());
 
         $this->validateResponseStatus($status_code, $json_response);
 
-        return $json_response->entries;
+        return $json_response->return;
     }
 
-    protected function validateResponseStatus($status_code, $json_response)
+    /**
+     * @param $status_code
+     * @param $json_response
+     * @return void
+     */
+    protected function validateResponseStatus($status_code, $json_response): void
     {
         if ($status_code !== Response::HTTP_OK) {
             throw new HttpException('Request has errors', $status_code);
@@ -112,7 +125,7 @@ class KavenegarConnector implements DriverConnector
             throw new HttpException('Response is not valid JSON', $status_code);
         }
 
-        if ($json_response->status !== Response::HTTP_OK) {
+        if ($json_response->return->status !== Response::HTTP_OK) {
             throw new ApiException($json_response->return->message, $json_response->return->status);
         }
     }

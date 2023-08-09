@@ -4,100 +4,123 @@ namespace Aryala7\Chapaar\Drivers\SmsIr;
 
 use Aryala7\Chapaar\Contracts\DriverConnector;
 use Aryala7\Chapaar\Contracts\DriverMessage;
+use Aryala7\Chapaar\Drivers\Kavenegar\KavenegarMessage;
 use Aryala7\Chapaar\Exceptions\ApiException;
 use Aryala7\Chapaar\Exceptions\HttpException;
 use GuzzleHttp\Client;
-use Illuminate\Http\Response;
+use GuzzleHttp\Exception\GuzzleException;
+use Symfony\Component\HttpFoundation\Response;
 
 class SmsIrConnector implements DriverConnector
 {
-    const PATH = 'https://api.sms.ir/%s/%s/%s';
 
     protected array|string $receptor = '';
 
     protected object $setting;
 
-    protected $client;
+    protected Client $client;
 
     protected string $content = '';
 
     public function __construct()
     {
+        $this->setting = (object) config('chapaar.drivers.smsir');
         $this->client = new Client([
-            'base_uri' => self::PATH,
+            'base_uri' => $this->setting->url,
             'headers' => [
-                'X-API-KEY' => config('chapaar.drivers.smsir.api_key'),
+                'X-API-KEY' => $this->setting->api_key,
                 'ACCEPT' => 'application/json',
                 'Content-Type' => 'application/json',
             ],
         ]);
-        $this->setting = (object) config('chapaar.drivers.smsir');
+
     }
 
-    public function generatePath($method, $base = 'send'): string
+    /**
+     * @param $method
+     * @param string $base
+     * @return string
+     */
+    public function generatePath($method, string $base = 'send'): string
     {
-        return sprintf(self::PATH, $this->setting->version, $base, $method);
+        return sprintf($this->setting->url, $this->setting->version, $base, $method);
     }
 
-    public function setReceptor(array|string $receptor): static
-    {
-        $this->receptor = is_array($receptor) ?: [$receptor];
-
-        return $this;
-    }
-
-    public function getReceptor()
-    {
-        return $this->receptor;
-    }
-
-    public function getContent()
+    /**
+     * @return string
+     */
+    public function getContent(): string
     {
         return $this->content;
     }
 
-    public function setContent(string $content)
+    /**
+     * @param string $content
+     * @return $this
+     */
+    public function setContent(string $content): static
     {
         $this->content = $content;
 
         return $this;
     }
 
-    public function send(DriverMessage $message)
+
+    /**
+     * @param SmsIrMessage $message
+     * @return object
+     * @throws GuzzleException
+     */
+    public function send($message): object
     {
         $url = self::generatePath('bulk');
-        $this->setReceptor($message->to);
         $params = [
-            'lineNumber' => $message->from ?: $this->setting->line_number,
-            'MessageText' => $message->content,
-            'Mobiles' => $this->getReceptor(),
+            'lineNumber' => $message->getFrom() ?: $this->setting->line_number,
+            'MessageText' => $message->getContent(),
+            'Mobiles' => $message->getTo(),
             'SendDateTime' => $message->dateTime ?? null,
         ];
 
         return $this->performApi($url, $params);
     }
 
-    public function verify(DriverMessage $message)
+    /**
+     * @param SmsIrMessage $message
+     * @return object
+     * @throws GuzzleException
+     */
+    public function verify($message):object
     {
         $url = self::generatePath('verify');
         $params = [
-            'Mobile' => $message->to,
-            'TemplateId' => $message->template,
-            'Parameters' => $message->tokens,
+            'Mobile' => $message->getTo(),
+            'TemplateId' => $message->getTemplate(),
+            'Parameters' => $message->getTokens(),
         ];
 
         return $this->performApi($url, $params);
 
     }
 
-    public function performApi(string $url, array $params)
+
+    /**
+     * @param string $url
+     * @param array $params
+     * @return object
+     * @throws GuzzleException
+     */
+    public function performApi(string $url, array $params): object
     {
         $response = $this->client->post($url, $params);
 
         return $this->processApiResponse($response);
     }
 
-    protected function processApiResponse($response)
+    /**
+     * @param $response
+     * @return object
+     */
+    protected function processApiResponse($response): object
     {
         $status_code = $response->getStatusCode();
         $json_response = json_decode($response->getBody()->getContents());
@@ -107,7 +130,12 @@ class SmsIrConnector implements DriverConnector
         return $json_response->entries;
     }
 
-    protected function validateResponseStatus($status_code, $json_response)
+    /**
+     * @param $status_code
+     * @param $json_response
+     * @return void
+     */
+    protected function validateResponseStatus($status_code, $json_response): void
     {
         if ($status_code !== Response::HTTP_OK) {
             throw new HttpException('Request has errors', $status_code);
