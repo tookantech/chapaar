@@ -21,7 +21,7 @@ it('can send plain message', function () {
     $result = $connector->send($mockedMessage);
 
     // Assert
-    $this->assertSame(['return' => ['status' => 200]], json_decode($mockedApiResponse->getBody()->getContents(),true));
+    $this->assertSame(['return' => ['status' => 200]], json_decode($mockedApiResponse->getBody()->getContents(), true));
 
 });
 
@@ -42,5 +42,5 @@ it('can send with template', function () {
     $result = $connector->verify($mockedMessage);
 
     // Assert
-    $this->assertSame(['return' => ['status' => 200]], json_decode($mockedApiResponse->getBody()->getContents(),true));
+    $this->assertSame(['return' => ['status' => 200]], json_decode($mockedApiResponse->getBody()->getContents(), true));
 });

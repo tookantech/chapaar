@@ -3,8 +3,6 @@
 namespace Aryala7\Chapaar\Drivers\SmsIr;
 
 use Aryala7\Chapaar\Contracts\DriverConnector;
-use Aryala7\Chapaar\Contracts\DriverMessage;
-use Aryala7\Chapaar\Drivers\Kavenegar\KavenegarMessage;
 use Aryala7\Chapaar\Exceptions\ApiException;
 use Aryala7\Chapaar\Exceptions\HttpException;
 use GuzzleHttp\Client;
@@ -13,7 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SmsIrConnector implements DriverConnector
 {
-
     protected array|string $receptor = '';
 
     protected object $setting;
@@ -36,26 +33,17 @@ class SmsIrConnector implements DriverConnector
 
     }
 
-    /**
-     * @param $method
-     * @param string $base
-     * @return string
-     */
     public function generatePath($method, string $base = 'send'): string
     {
         return sprintf($this->setting->url, $this->setting->version, $base, $method);
     }
 
-    /**
-     * @return string
-     */
     public function getContent(): string
     {
         return $this->content;
     }
 
     /**
-     * @param string $content
      * @return $this
      */
     public function setContent(string $content): static
@@ -65,10 +53,9 @@ class SmsIrConnector implements DriverConnector
         return $this;
     }
 
-
     /**
-     * @param SmsIrMessage $message
-     * @return object
+     * @param  SmsIrMessage  $message
+     *
      * @throws GuzzleException
      */
     public function send($message): object
@@ -85,11 +72,11 @@ class SmsIrConnector implements DriverConnector
     }
 
     /**
-     * @param SmsIrMessage $message
-     * @return object
+     * @param  SmsIrMessage  $message
+     *
      * @throws GuzzleException
      */
-    public function verify($message):object
+    public function verify($message): object
     {
         $url = self::generatePath('verify');
         $params = [
@@ -102,11 +89,7 @@ class SmsIrConnector implements DriverConnector
 
     }
 
-
     /**
-     * @param string $url
-     * @param array $params
-     * @return object
      * @throws GuzzleException
      */
     public function performApi(string $url, array $params): object
@@ -116,10 +99,6 @@ class SmsIrConnector implements DriverConnector
         return $this->processApiResponse($response);
     }
 
-    /**
-     * @param $response
-     * @return object
-     */
     protected function processApiResponse($response): object
     {
         $status_code = $response->getStatusCode();
@@ -130,11 +109,6 @@ class SmsIrConnector implements DriverConnector
         return $json_response->entries;
     }
 
-    /**
-     * @param $status_code
-     * @param $json_response
-     * @return void
-     */
     protected function validateResponseStatus($status_code, $json_response): void
     {
         if ($status_code !== Response::HTTP_OK) {

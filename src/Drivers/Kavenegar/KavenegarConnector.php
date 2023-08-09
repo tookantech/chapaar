@@ -29,20 +29,14 @@ class KavenegarConnector implements DriverConnector
         $this->setting = (object) config('chapaar.drivers.kavenegar');
     }
 
-    /**
-     * @param $method
-     * @param string $base
-     * @return string
-     */
     public function generatePath($method, string $base = 'sms'): string
     {
         return sprintf($this->setting->url, $this->setting->scheme, $this->setting->api_key, $base, $method);
     }
 
-
     /**
-     * @param KavenegarMessage $message
-     * @return object
+     * @param  KavenegarMessage  $message
+     *
      * @throws GuzzleException
      */
     public function send($message): object
@@ -52,17 +46,17 @@ class KavenegarConnector implements DriverConnector
             'receptor' => $message->getTo(),
             'message' => $message->getContent(),
             'sender' => $message->getFrom() ?: $this->setting->line_number,
-            'date' => $message->getDate() ?? NULL,
-            'type' => $message->getType() ?? NULL,
-            'localid' => $message->getLocalId() ?? NULL,
+            'date' => $message->getDate() ?? null,
+            'type' => $message->getType() ?? null,
+            'localid' => $message->getLocalId() ?? null,
         ];
 
         return $this->performApi($url, $params);
     }
 
     /**
-     * @param  KavenegarMessage $message
-     * @return object
+     * @param  KavenegarMessage  $message
+     *
      * @throws GuzzleException
      */
     public function verify($message): object
@@ -72,35 +66,29 @@ class KavenegarConnector implements DriverConnector
             'receptor' => $message->getTo(),
             'template' => $message->getTemplate(),
             'token' => $message->getTokens()[0],
-            'token2' => $message->getTokens()[1] ?? NULL,
-            'token3' => $message->getTokens()[2] ?? NULL,
-            'token10' => $message->getTokens()[3] ?? NULL,
-            'token20' => $message->getTokens()[4] ?? NULL,
-            'type' => $message->getType() ?? NULL,
+            'token2' => $message->getTokens()[1] ?? null,
+            'token3' => $message->getTokens()[2] ?? null,
+            'token10' => $message->getTokens()[3] ?? null,
+            'token20' => $message->getTokens()[4] ?? null,
+            'type' => $message->getType() ?? null,
         ];
 
         return $this->performApi($url, $params);
     }
 
     /**
-     * @param string $url
-     * @param array $params
-     * @return object
      * @throws GuzzleException
      */
-    public function performApi(string $url, array $params):object
+    public function performApi(string $url, array $params): object
     {
         $response = $this->client->post($url, [
             'form_params' => $params,
         ]);
+
         return $this->processApiResponse($response);
     }
 
-    /**
-     * @param $response
-     * @return object
-     */
-    protected function processApiResponse($response):object
+    protected function processApiResponse($response): object
     {
         $status_code = $response->getStatusCode();
         $json_response = json_decode($response->getBody()->getContents());
@@ -110,11 +98,6 @@ class KavenegarConnector implements DriverConnector
         return $json_response->return;
     }
 
-    /**
-     * @param $status_code
-     * @param $json_response
-     * @return void
-     */
     protected function validateResponseStatus($status_code, $json_response): void
     {
         if ($status_code !== Response::HTTP_OK) {
