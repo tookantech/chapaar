@@ -2,33 +2,32 @@
 
 namespace Aryala7\Chapaar;
 
-use Aryala7\Chapaar\Abstracts\DriverSender;
 use Aryala7\Chapaar\Contracts\DriverConnector;
+use Aryala7\Chapaar\Contracts\DriverMessage;
+use Aryala7\Chapaar\Drivers\Kavenegar\KavenegarConnector;
+use Aryala7\Chapaar\Drivers\SmsIr\SmsIrConnector;
 
+/**
+ * @method getDefaultDriver
+ */
 class Chapaar
 {
-    public array $data = [];
-
-    protected DriverConnector $via;
-
-    /**
-     * @return $this
-     */
-    public function setData(array $data): static
+    public function getDefaultDriver()
     {
-        $this->data = $data;
-
-        return $this;
+        return match (config('chapaar.default')) {
+            'kavenegar' => (new KavenegarConnector),
+            'smsir' => (new SmsIrConnector),
+        };
     }
 
-    public function getData()
+    public function send(DriverConnector $driver, DriverMessage $message)
     {
-        return $this->data;
+        return $driver->send($message);
     }
 
-    public function handle(DriverSender $sender): void
+
+    public function verify(DriverConnector $driver, DriverMessage $message)
     {
-        //        dd($sender);
-        $sender->send($this->getData());
+        return $driver->verify($message);
     }
 }

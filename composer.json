@@ -6,6 +6,7 @@
         "laravel",
         "chapaar"
     ],
+    "type": "library",
     "homepage": "https://github.com/aryala7/chapaar",
     "license": "MIT",
     "authors": [
