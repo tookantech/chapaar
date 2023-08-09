@@ -5,6 +5,7 @@ namespace Aryala7\Chapaar;
 use Aryala7\Chapaar\Contracts\DriverMessage;
 use Aryala7\Chapaar\Drivers\Kavenegar\KavenegarMessage;
 use Aryala7\Chapaar\Drivers\SmsIr\SmsIrMessage;
+use Aryala7\Chapaar\Exceptions\DriverNotFoundException;
 
 class SmsMessage
 {
@@ -18,7 +19,10 @@ class SmsMessage
         $default_driver = config('chapaar.default');
         $this->message_driver = match ($default_driver) {
             'kavenegar' => KavenegarMessage::class,
-            'smsir' => SmsIrMessage::class
+            'smsir' => SmsIrMessage::class,
+            default => function(){
+                throw new DriverNotFoundException('Unknown Driver' . config('chapaar.default'));
+            }
         };
     }
 
