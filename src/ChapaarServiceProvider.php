@@ -2,7 +2,6 @@
 
 namespace Aryala7\Chapaar;
 
-
 use Illuminate\Support\Facades\Notification;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -11,7 +10,6 @@ class ChapaarServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
-
 
         // $this->app->when(KavenegarChannel::class)
         //     ->needs(SmsIrConnector::class)

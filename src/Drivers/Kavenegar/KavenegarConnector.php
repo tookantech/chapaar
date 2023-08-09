@@ -7,7 +7,6 @@ use Aryala7\Chapaar\Contracts\DriverMessage;
 use Aryala7\Chapaar\Exceptions\ApiException;
 use Aryala7\Chapaar\Exceptions\HttpException;
 use GuzzleHttp\Client;
-
 use Illuminate\Http\Response;
 
 class KavenegarConnector implements DriverConnector
@@ -19,7 +18,6 @@ class KavenegarConnector implements DriverConnector
     protected object $setting;
 
     protected $client;
-
 
     public function __construct()
     {
@@ -85,12 +83,12 @@ class KavenegarConnector implements DriverConnector
         return $this->performApi($url, $params);
     }
 
-
     public function performApi(string $url, array $params)
     {
         $response = $this->client->post($url, [
             'form_params' => http_build_query($params),
         ]);
+
         return $this->processApiResponse($response);
     }
 

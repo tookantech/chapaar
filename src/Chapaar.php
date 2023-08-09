@@ -25,7 +25,6 @@ class Chapaar
         return $driver->send($message);
     }
 
-
     public function verify(DriverConnector $driver, DriverMessage $message)
     {
         return $driver->verify($message);
