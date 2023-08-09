@@ -10,12 +10,6 @@ class ChapaarServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
-
-        // $this->app->when(KavenegarChannel::class)
-        //     ->needs(SmsIrConnector::class)
-        //     ->give(function () {
-        //         return new SmsIrConnector();
-        //     });
         /*
          * This class is a Package Service Provider
          *

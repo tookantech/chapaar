@@ -6,7 +6,8 @@ interface DriverConnector
 {
     public function performApi(string $url, array $params);
 
-    public function send(DriverMessage $message);
+    public function send($message);
 
-    public function verify(DriverMessage $message);
+    //
+    public function verify($message);
 }
