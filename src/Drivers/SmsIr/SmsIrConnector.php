@@ -5,12 +5,16 @@ namespace Aryala7\Chapaar\Drivers\SmsIr;
 use Aryala7\Chapaar\Contracts\DriverConnector;
 use Aryala7\Chapaar\Exceptions\ApiException;
 use Aryala7\Chapaar\Exceptions\HttpException;
+use Aryala7\Chapaar\SmsMessage;
+use Aryala7\Chapaar\Traits\HasResponse;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Psr7\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SmsIrConnector implements DriverConnector
 {
+    use HasResponse;
     protected array|string $receptor = '';
 
     protected object $setting;
@@ -23,10 +27,9 @@ class SmsIrConnector implements DriverConnector
     {
         $this->setting = (object) config('chapaar.drivers.smsir');
         $this->client = new Client([
-            'base_uri' => $this->setting->url,
             'headers' => [
-                'X-API-KEY' => $this->setting->api_key,
-                'ACCEPT' => 'application/json',
+                'x-api-key' => $this->setting->api_key,
+                'Accept' => 'text/plain',
                 'Content-Type' => 'application/json',
             ],
         ]);
@@ -80,9 +83,9 @@ class SmsIrConnector implements DriverConnector
     {
         $url = self::generatePath('verify');
         $params = [
-            'Mobile' => $message->getTo(),
-            'TemplateId' => $message->getTemplate(),
-            'Parameters' => $message->getTokens(),
+            'mobile' => $message->getTo(),
+            'templateId' => (int)$message->getTemplate(),
+            'parameters' =>$message->getTokens(),
         ];
 
         return $this->performApi($url, $params);
@@ -92,10 +95,11 @@ class SmsIrConnector implements DriverConnector
     /**
      * @throws GuzzleException
      */
-    public function performApi(string $url, array $params): object
+    public function performApi(string $url,array $params): object
     {
-        $response = $this->client->post($url, $params);
-
+        $response = $this->client->post($url,[
+            'json' => $params
+        ]);
         return $this->processApiResponse($response);
     }
 
@@ -103,24 +107,18 @@ class SmsIrConnector implements DriverConnector
     {
         $status_code = $response->getStatusCode();
         $json_response = json_decode($response->getBody()->getContents());
-
         $this->validateResponseStatus($status_code, $json_response);
-
-        return $json_response->entries;
+        return  $this->generateResponse($json_response->status,$json_response?->message,(array)$json_response?->data);
     }
 
     protected function validateResponseStatus($status_code, $json_response): void
     {
-        if ($status_code !== Response::HTTP_OK) {
-            throw new HttpException('Request has errors', $status_code);
-        }
-
         if ($json_response === null) {
             throw new HttpException('Response is not valid JSON', $status_code);
         }
 
         if ($json_response->status !== 1) {
-            throw new ApiException($json_response->return->message, $json_response->return->status);
+            throw new ApiException($json_response->message, $json_response->status);
         }
     }
 }

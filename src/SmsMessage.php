@@ -25,7 +25,7 @@ class SmsMessage
             }
         };
     }
-
+    
     public function driver()
     {
         return new $this->message_driver;

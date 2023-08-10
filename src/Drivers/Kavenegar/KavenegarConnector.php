@@ -5,12 +5,14 @@ namespace Aryala7\Chapaar\Drivers\Kavenegar;
 use Aryala7\Chapaar\Contracts\DriverConnector;
 use Aryala7\Chapaar\Exceptions\ApiException;
 use Aryala7\Chapaar\Exceptions\HttpException;
+use Aryala7\Chapaar\Traits\HasResponse;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\HttpFoundation\Response;
 
 class KavenegarConnector implements DriverConnector
 {
+    use HasResponse;
     protected object $setting;
 
     protected Client $client;
@@ -84,7 +86,6 @@ class KavenegarConnector implements DriverConnector
         $response = $this->client->post($url, [
             'form_params' => $params,
         ]);
-
         return $this->processApiResponse($response);
     }
 
@@ -95,20 +96,16 @@ class KavenegarConnector implements DriverConnector
 
         $this->validateResponseStatus($status_code, $json_response);
 
-        return $json_response->return;
+        return  $this->generateResponse($json_response->return?->status,$json_response->return?->message,(array)$json_response?->entries);
+
     }
 
     protected function validateResponseStatus($status_code, $json_response): void
     {
-        if ($status_code !== Response::HTTP_OK) {
-            throw new HttpException('Request has errors', $status_code);
-        }
-
         if ($json_response === null) {
             throw new HttpException('Response is not valid JSON', $status_code);
         }
-
-        if ($json_response->return->status !== Response::HTTP_OK) {
+        if ($json_response->return?->status !== Response::HTTP_OK) {
             throw new ApiException($json_response->return->message, $json_response->return->status);
         }
     }

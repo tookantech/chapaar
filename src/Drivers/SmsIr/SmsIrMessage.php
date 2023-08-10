@@ -15,7 +15,7 @@ class SmsIrMessage implements DriverMessage
 
     protected string $from;
 
-    protected array $to;
+    protected array|string $to;
 
     protected string $template;
 
@@ -66,7 +66,7 @@ class SmsIrMessage implements DriverMessage
         return $this->to;
     }
 
-    public function setTo(array $to): static
+    public function setTo(array|string $to): static
     {
         $this->to = $to;
 
