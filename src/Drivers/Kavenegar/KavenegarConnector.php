@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class KavenegarConnector implements DriverConnector
 {
     use HasResponse;
+
     protected object $setting;
 
     protected Client $client;
@@ -86,6 +87,7 @@ class KavenegarConnector implements DriverConnector
         $response = $this->client->post($url, [
             'form_params' => $params,
         ]);
+
         return $this->processApiResponse($response);
     }
 
@@ -96,7 +98,7 @@ class KavenegarConnector implements DriverConnector
 
         $this->validateResponseStatus($status_code, $json_response);
 
-        return  $this->generateResponse($json_response->return?->status,$json_response->return?->message,(array)$json_response?->entries);
+        return $this->generateResponse($json_response->return?->status, $json_response->return?->message, (array) $json_response?->entries);
 
     }
 
