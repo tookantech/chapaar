@@ -8,6 +8,7 @@ interface DriverConnector
 
     public function send($message);
 
-    //
     public function verify($message);
+
+    public function generateResponse(int $status, string $message, array $data = null): object;
 }
