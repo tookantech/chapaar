@@ -13,7 +13,6 @@ class InvoicePaid extends Notification
         return ['sms'];
     }
 
-
     public function toSms($notifiable): DriverMessage
     {
 

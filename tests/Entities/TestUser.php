@@ -8,9 +8,10 @@ use Illuminate\Notifications\Notifiable;
 class TestUser extends Model
 {
     use Notifiable;
+
     protected $table = 'users';
 
-    public function routeNotificationForSms($driver, $notification = NULL)
+    public function routeNotificationForSms($driver, $notification = null)
     {
         return $this->cellphone;
     }

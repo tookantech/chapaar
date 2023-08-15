@@ -21,25 +21,22 @@ class SmsChannel
         $this->setting = (object) config("chapaar.drivers.$defaultDriverName");
     }
 
-
     public function send($notifiable, $notification)
     {
 
         /** @var DriverMessage $message */
         $message = $notification->toSms($notifiable);
 
-
-        $recipient = $message->getTo() ?: $notifiable->routeNotificationFor('sms',$notification);
+        $recipient = $message->getTo() ?: $notifiable->routeNotificationFor('sms', $notification);
         $template = $message->getTemplate();
-        if (!$recipient || ! ($message->getFrom() || $message->getTemplate())) {
+        if (! $recipient || ! ($message->getFrom() || $message->getTemplate())) {
             return 0;
         }
         if ($template) {
             return $this->driver->verify($message);
-        }else {
+        } else {
             return $this->driver->send($message);
         }
 
     }
-
 }

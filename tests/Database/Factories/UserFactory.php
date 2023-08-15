@@ -15,7 +15,7 @@ class UserFactory extends Factory
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'password' => bcrypt('password'), // Assuming you're hashing passwords
-            'cellphone' => $this->faker->phoneNumber
+            'cellphone' => $this->faker->phoneNumber,
             // Add any other fields you need for your custom user model
         ];
     }
