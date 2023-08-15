@@ -16,11 +16,11 @@ class KavenegarMessage implements DriverMessage
 
     protected string $content;
 
-    protected string $from;
+    protected string $from = '';
 
-    protected string|array $to;
+    protected string $to = '';
 
-    protected string $template;
+    protected string $template = '';
 
     protected array $tokens = [];
 
