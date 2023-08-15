@@ -75,17 +75,56 @@ Sending With Template Message
 ```php
 use Aryala7\Chapaar\Facades\Chapaar;
 use Aryala7\Chapaar\Drivers\Kavenegar\KavenegarMessage;
-
-$message = new KavenegarMessage(); // Replace with your message implementation
+use Aryala7\Chapaar\SmsMessage;
+$message = new SmsMessage();
 $message
+    ->driver()
     ->template("invoice-paid")
     ->to('recipient_number')
-    ->tokens(['tokens']);
+    ->tokens(['123','456','789']);
+    
+# SmsIr
+$message
+    ->driver()
+    ->template("invoice-paid")
+    ->to('recipient_number')
+    ->tokens([
+        ['name' => 'code' , 'value' => '123']
+    ]);
 
 $response = Chapaar::verify($message);
-// Handle the response as needed
 
 ```
+## Using In Notifications
+Please review [laravel notifications](https://laravel.com/docs/10.x/notifications) on how use notifications in laravel.
+
+```php
+use Aryala7\Chapaar\SmsChannel;
+class InvoicePaid extends KavenegarBaseNotification
+{
+    public function via($notifiable): array
+    {
+        return [SmsChannel::class];
+    }
+    public function toSms($notifiable)
+    {
+        return (new SmsMessage)->driver()
+        ->setTemplate('verify')
+        ->setTokens([123],[456])
+    }
+}
+
+class User extends Authenticatable
+{
+    use Notifiable;
+
+    public function routeNotificationForSms($driver, $notification = null)
+    {
+        return $this->mobile;
+    }
+
+}
+``` 
 
 ## Testing
 
@@ -106,9 +145,8 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
 
 ## Credits
-
+- [tookantech](https://github.com/TookanTech)
 - [arya](https://github.com/aryala7)
-- [All Contributors](../../contributors)
 
 ## License
 
