@@ -1,9 +1,9 @@
 # This is my package chapaar
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/aryala7/chapaar.svg?style=flat-square)](https://packagist.org/packages/aryala7/chapaar)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/aryala7/chapaar/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/aryala7/chapaar/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/aryala7/chapaar/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/aryala7/chapaar/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/aryala7/chapaar.svg?style=flat-square)](https://packagist.org/packages/aryala7/chapaar)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/TookanTech/chapaar.svg?style=flat-square)](https://packagist.org/packages/TookanTech/chapaar)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/TookanTech/chapaar/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/TookanTech/chapaar/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/TookanTech/chapaar/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/TookanTech/chapaar/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/TookanTech/chapaar.svg?style=flat-square)](https://packagist.org/packages/TookanTech/chapaar)
 
 This package provides a flexible way to send and verify messages through various SMS providers. It offers integration with multiple drivers, making it easy to use different SMS service providers without getting locked into a specific one.
 
@@ -15,7 +15,7 @@ This package provides a flexible way to send and verify messages through various
 You can install the package via composer:
 
 ```bash
-composer require aryala7/chapaar
+composer require TookanTech/chapaar
 ```
 
 
