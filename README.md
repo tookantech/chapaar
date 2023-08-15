@@ -60,21 +60,21 @@ If you want to use the Chapaar package without Laravel's built-in notification s
 Sending a Simple Message
 ```php
 use Aryala7\Chapaar\Facades\Chapaar;
-use Aryala7\Chapaar\Drivers\Kavenegar\KavenegarMessage;
+use Aryala7\Chapaar\SmsMessage;
 
-$message = new KavenegarMessage(); // Replace with your message implementation
-$message->to('recipient_number')
+$message = new SmsMessage(); // Replace with your message implementation
+$message->driver()
+    ->setFrom('12345678')
+    ->setTo('0912111111')
     ->content('Hello, this is a test message.');
 
 $response = Chapaar::send($message);
-// Handle the response as needed
 
 ```
 
 Sending With Template Message
 ```php
 use Aryala7\Chapaar\Facades\Chapaar;
-use Aryala7\Chapaar\Drivers\Kavenegar\KavenegarMessage;
 use Aryala7\Chapaar\SmsMessage;
 $message = new SmsMessage();
 $message
