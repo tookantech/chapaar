@@ -1,6 +1,6 @@
 <?php
 
-namespace Aryala7\Chapaar\Drivers\SmsIr;
+namespace Aryala7\Chapaar\Drivers\Ghasedak;
 
 use Aryala7\Chapaar\Contracts\DriverConnector;
 use Aryala7\Chapaar\Exceptions\ApiException;
@@ -8,8 +8,9 @@ use Aryala7\Chapaar\Exceptions\HttpException;
 use Aryala7\Chapaar\Traits\HasResponse;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\Response;
 
-class SmsIrConnector implements DriverConnector
+class GhasedakConnector implements DriverConnector
 {
     use HasResponse;
 
@@ -17,54 +18,61 @@ class SmsIrConnector implements DriverConnector
 
     protected Client $client;
 
+    protected string $content = '';
+
     public function __construct()
     {
-        $this->setting = (object) config('chapaar.drivers.smsir');
+        $this->setting = (object) config('chapaar.drivers.ghasedak');
         $this->client = new Client([
             'headers' => [
-                'x-api-key' => $this->setting->api_key,
-                'Accept' => 'text/plain',
-                'Content-Type' => 'application/json',
+                'apikey' => $this->setting->api_key,
+                'Accept: application/json',
+                'Content-Type: application/x-www-form-urlencoded',
+                'charset: utf-8',
             ],
         ]);
 
     }
 
-    public function generatePath($method, string $base = 'send'): string
+    public function generatePath($base, $action, $method): string
     {
-        return sprintf($this->setting->url, $this->setting->version, $base, $method);
+        return sprintf($this->setting->url, $this->setting->version, $base, $action, $method);
     }
 
     /**
-     * @param  SmsIrMessage  $message
+     * @param  GhasedakMessage  $message
      *
      * @throws GuzzleException
      */
     public function send($message): object
     {
-        $url = self::generatePath('bulk');
+        $url = self::generatePath('sms', 'send', 'simple');
         $params = [
-            'lineNumber' => $message->getFrom() ?: $this->setting->line_number,
-            'MessageText' => $message->getContent(),
-            'Mobiles' => $message->getTo(),
-            'SendDateTime' => $message->dateTime ?? null,
+            'linenumber' => $message->getFrom() ?: $this->setting->line_number,
+            'message' => $message->getContent(),
+            'receptor' => $message->getTo(),
+            'checkid' => $message->dateTime ?? null,
         ];
 
         return $this->performApi($url, $params);
     }
 
     /**
-     * @param  SmsIrMessage  $message
+     * @param  GhasedakMessage  $message
      *
      * @throws GuzzleException
      */
     public function verify($message): object
     {
-        $url = self::generatePath('verify');
+        $url = self::generatePath('verification', 'send', 'simple');
         $params = [
-            'mobile' => $message->getTo(),
-            'templateId' => (int) $message->getTemplate(),
-            'parameters' => $message->getTokens(),
+            'receptor' => $message->getTo(),
+            'type' => $message->getType(),
+            'template' => (int) $message->getTemplate(),
+            ...array_map(fn ($key, $arg) => ["param$key" => $arg], // param1,param2,...
+                array_keys($message->getTokens()), $message->getTokens()
+            ),
+
         ];
 
         return $this->performApi($url, $params);
@@ -77,7 +85,7 @@ class SmsIrConnector implements DriverConnector
     public function performApi(string $url, array $params): object
     {
         $response = $this->client->post($url, [
-            'json' => $params,
+            'form_params' => $params,
         ]);
 
         return $this->processApiResponse($response);
@@ -98,7 +106,7 @@ class SmsIrConnector implements DriverConnector
             throw new HttpException('Response is not valid JSON', $status_code);
         }
 
-        if ($json_response->status !== 1) {
+        if ($json_response->status !== Response::HTTP_OK) {
             throw new ApiException($json_response->message, $json_response->status);
         }
     }

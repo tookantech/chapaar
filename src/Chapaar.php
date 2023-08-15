@@ -4,6 +4,7 @@ namespace Aryala7\Chapaar;
 
 use Aryala7\Chapaar\Contracts\DriverConnector;
 use Aryala7\Chapaar\Contracts\DriverMessage;
+use Aryala7\Chapaar\Drivers\Ghasedak\GhasedakConnector;
 use Aryala7\Chapaar\Drivers\Kavenegar\KavenegarConnector;
 use Aryala7\Chapaar\Drivers\SmsIr\SmsIrConnector;
 use Aryala7\Chapaar\Exceptions\DriverNotFoundException;
@@ -23,6 +24,7 @@ class Chapaar
         return match (config('chapaar.default')) {
             'kavenegar' => (new KavenegarConnector),
             'smsir' => (new SmsIrConnector),
+            'ghasedak' => (new GhasedakConnector),
             default => function () {
                 throw new DriverNotFoundException('Unknown Driver'.config('chapaar.default'));
             }

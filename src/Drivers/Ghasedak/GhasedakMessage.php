@@ -1,10 +1,10 @@
 <?php
 
-namespace Aryala7\Chapaar\Drivers\SmsIr;
+namespace Aryala7\Chapaar\Drivers\Ghasedak;
 
 use Aryala7\Chapaar\Contracts\DriverMessage;
 
-class SmsIrMessage implements DriverMessage
+class GhasedakMessage implements DriverMessage
 {
     protected string $content;
 
@@ -12,9 +12,18 @@ class SmsIrMessage implements DriverMessage
 
     protected array|string $to;
 
-    protected int $template;
+    protected string $template;
+
+    protected string $check_id;
 
     protected array $tokens = [];
+
+    protected string $date;
+
+    /**
+     * @var int Set 1 to send text message and 2 to send voice message.
+     */
+    protected int $type;
 
     public function getContent(): string
     {
@@ -52,9 +61,9 @@ class SmsIrMessage implements DriverMessage
         return $this;
     }
 
-    public function getTemplate(): int
+    public function getTemplate(): string
     {
-        return (int) $this->template;
+        return $this->template;
     }
 
     public function setTemplate($template): self
@@ -74,5 +83,35 @@ class SmsIrMessage implements DriverMessage
         $this->tokens = $tokens;
 
         return $this;
+    }
+
+    public function getCheckId(): string
+    {
+        return $this->check_id;
+    }
+
+    public function setCheckId(string $check_id): void
+    {
+        $this->check_id = $check_id;
+    }
+
+    public function getType(): int
+    {
+        return $this->type;
+    }
+
+    public function setType(int $type): void
+    {
+        $this->type = $type;
+    }
+
+    public function getDate(): string
+    {
+        return $this->date;
+    }
+
+    public function setDate(string $date): void
+    {
+        $this->date = $date;
     }
 }

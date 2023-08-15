@@ -10,14 +10,18 @@ return [
             'scheme' => 'http',
             'api_key' => '7959394764735A684E4364617358613568585973716E5368326C7A7675537463627773506738464E716F513D',
             'line_number' => '1000689696',
-            'template' => '',
         ],
         'smsir' => [
             'url' => 'https://api.sms.ir/%s/%s/%s',
             'version' => 'v1',
             'api_key' => '',
-            'line_number' => '1000689696',
-            'template_id' => '',
+            'line_number' => '',
+        ],
+        'ghasedak' => [
+            'url' => 'http://api.ghasedak.me/%s/%s/%s/%s',
+            'version' => 'v1',
+            'api_key' => '',
+            'line_number' => '',
         ],
     ],
 ];
