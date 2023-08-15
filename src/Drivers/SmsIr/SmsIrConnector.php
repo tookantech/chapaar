@@ -13,13 +13,10 @@ class SmsIrConnector implements DriverConnector
 {
     use HasResponse;
 
-    protected array|string $receptor = '';
-
     protected object $setting;
 
     protected Client $client;
 
-    protected string $content = '';
 
     public function __construct()
     {
@@ -37,21 +34,6 @@ class SmsIrConnector implements DriverConnector
     public function generatePath($method, string $base = 'send'): string
     {
         return sprintf($this->setting->url, $this->setting->version, $base, $method);
-    }
-
-    public function getContent(): string
-    {
-        return $this->content;
-    }
-
-    /**
-     * @return $this
-     */
-    public function setContent(string $content): static
-    {
-        $this->content = $content;
-
-        return $this;
     }
 
     /**

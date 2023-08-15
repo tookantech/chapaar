@@ -6,36 +6,15 @@ use Aryala7\Chapaar\Contracts\DriverMessage;
 
 class SmsIrMessage implements DriverMessage
 {
-    /**
-     * The message type.
-     */
-    protected string $type = 'text';
-
     protected string $content;
 
     protected string $from;
 
     protected array|string $to;
 
-    protected string $template;
+    protected int $template;
 
     protected array $tokens = [];
-
-    protected string $date;
-
-    protected string $local_id;
-
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
 
     public function getContent(): string
     {
@@ -54,7 +33,7 @@ class SmsIrMessage implements DriverMessage
         return $this->from;
     }
 
-    public function setFrom(string $from): self
+    public function setFrom($from): self
     {
         $this->from = $from;
 
@@ -66,19 +45,19 @@ class SmsIrMessage implements DriverMessage
         return $this->to;
     }
 
-    public function setTo(array|string $to): static
+    public function setTo($to): static
     {
         $this->to = $to;
 
         return $this;
     }
 
-    public function getTemplate(): string
+    public function getTemplate(): int
     {
-        return $this->template;
+        return (int)$this->template;
     }
 
-    public function setTemplate(string $template): self
+    public function setTemplate($template): self
     {
         $this->template = $template;
 
@@ -95,37 +74,5 @@ class SmsIrMessage implements DriverMessage
         $this->tokens = $tokens;
 
         return $this;
-    }
-
-    public function getLocalId(): ?string
-    {
-        return $this->local_id;
-    }
-
-    public function setLocalId(string $local_id): self
-    {
-        $this->local_id = $local_id;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDate(): ?string
-    {
-        return $this->date;
-    }
-
-    public function setDate(string $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    public function driver()
-    {
-        return new SmsIrConnector();
     }
 }

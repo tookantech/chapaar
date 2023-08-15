@@ -57,7 +57,7 @@ class KavenegarMessage implements DriverMessage
         return $this->from;
     }
 
-    public function setFrom(string $from): self
+    public function setFrom($from): self
     {
         $this->from = $from;
 
@@ -69,7 +69,7 @@ class KavenegarMessage implements DriverMessage
         return $this->to;
     }
 
-    public function setTo(array|string $to): static
+    public function setTo($to): static
     {
         if (is_array($to)) {
             $to = implode(',', $to);
@@ -84,7 +84,7 @@ class KavenegarMessage implements DriverMessage
         return $this->template;
     }
 
-    public function setTemplate(string $template): self
+    public function setTemplate($template): self
     {
         $this->template = $template;
 
@@ -116,7 +116,7 @@ class KavenegarMessage implements DriverMessage
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getDate(): ?string
     {
@@ -128,10 +128,5 @@ class KavenegarMessage implements DriverMessage
         $this->date = $date;
 
         return $this;
-    }
-
-    public function driver()
-    {
-        return new KavenegarConnector;
     }
 }
