@@ -17,7 +17,6 @@ class SmsIrConnector implements DriverConnector
 
     protected Client $client;
 
-
     public function __construct()
     {
         $this->setting = (object) config('chapaar.drivers.smsir');

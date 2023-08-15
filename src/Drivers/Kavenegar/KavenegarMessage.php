@@ -115,9 +115,6 @@ class KavenegarMessage implements DriverMessage
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDate(): ?string
     {
         return $this->date;

@@ -85,49 +85,31 @@ class GhasedakMessage implements DriverMessage
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getCheckId(): string
     {
         return $this->check_id;
     }
 
-    /**
-     * @param string $check_id
-     */
     public function setCheckId(string $check_id): void
     {
         $this->check_id = $check_id;
     }
 
-    /**
-     * @return int
-     */
     public function getType(): int
     {
         return $this->type;
     }
 
-    /**
-     * @param int $type
-     */
     public function setType(int $type): void
     {
         $this->type = $type;
     }
 
-    /**
-     * @return string
-     */
     public function getDate(): string
     {
         return $this->date;
     }
 
-    /**
-     * @param string $date
-     */
     public function setDate(string $date): void
     {
         $this->date = $date;

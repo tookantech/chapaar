@@ -54,7 +54,7 @@ class SmsIrMessage implements DriverMessage
 
     public function getTemplate(): int
     {
-        return (int)$this->template;
+        return (int) $this->template;
     }
 
     public function setTemplate($template): self

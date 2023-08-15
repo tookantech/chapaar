@@ -3,8 +3,8 @@
 namespace Aryala7\Chapaar;
 
 use Aryala7\Chapaar\Contracts\DriverMessage;
-use Aryala7\Chapaar\Drivers\Kavenegar\KavenegarMessage;
 use Aryala7\Chapaar\Drivers\Ghasedak\GhasedakMessage;
+use Aryala7\Chapaar\Drivers\Kavenegar\KavenegarMessage;
 use Aryala7\Chapaar\Drivers\SmsIr\SmsIrMessage;
 use Aryala7\Chapaar\Exceptions\DriverNotFoundException;
 
@@ -28,10 +28,7 @@ class SmsMessage
         };
     }
 
-    /**
-     * @return DriverMessage
-     */
-    public function driver():DriverMessage
+    public function driver(): DriverMessage
     {
         return new $this->message_driver;
     }

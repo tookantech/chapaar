@@ -28,15 +28,15 @@ class GhasedakConnector implements DriverConnector
                 'apikey' => $this->setting->api_key,
                 'Accept: application/json',
                 'Content-Type: application/x-www-form-urlencoded',
-                'charset: utf-8'
+                'charset: utf-8',
             ],
         ]);
 
     }
 
-    public function generatePath($base,$action,$method): string
+    public function generatePath($base, $action, $method): string
     {
-        return sprintf($this->setting->url, $this->setting->version, $base, $action,$method);
+        return sprintf($this->setting->url, $this->setting->version, $base, $action, $method);
     }
 
     /**
@@ -46,13 +46,14 @@ class GhasedakConnector implements DriverConnector
      */
     public function send($message): object
     {
-        $url = self::generatePath('sms','send','simple');
+        $url = self::generatePath('sms', 'send', 'simple');
         $params = [
             'linenumber' => $message->getFrom() ?: $this->setting->line_number,
             'message' => $message->getContent(),
             'receptor' => $message->getTo(),
             'checkid' => $message->dateTime ?? null,
         ];
+
         return $this->performApi($url, $params);
     }
 
@@ -63,16 +64,17 @@ class GhasedakConnector implements DriverConnector
      */
     public function verify($message): object
     {
-        $url = self::generatePath('verification','send','simple');
+        $url = self::generatePath('verification', 'send', 'simple');
         $params = [
             'receptor' => $message->getTo(),
-            'type' =>     $message->getType(),
+            'type' => $message->getType(),
             'template' => (int) $message->getTemplate(),
-            ...array_map(fn($key, $arg) => ["param$key" => $arg], // param1,param2,...
+            ...array_map(fn ($key, $arg) => ["param$key" => $arg], // param1,param2,...
                 array_keys($message->getTokens()), $message->getTokens()
-            )
+            ),
 
         ];
+
         return $this->performApi($url, $params);
 
     }
