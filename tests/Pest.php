@@ -1,6 +1,6 @@
 <?php
 
-use Aryala7\Chapaar\Tests\TestCase;
+use TookanTech\Chapaar\Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__);
-uses(\Aryala7\Chapaar\Traits\HasResponse::class)->in(__DIR__);
+uses(\TookanTech\Chapaar\Traits\HasResponse::class)->in(__DIR__);

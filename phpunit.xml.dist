@@ -16,7 +16,7 @@
     backupStaticProperties="false"
 >
     <testsuites>
-        <testsuite name="Aryala7 Test Suite">
+        <testsuite name="TookanTech Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

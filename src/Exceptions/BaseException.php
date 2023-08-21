@@ -1,6 +1,6 @@
 <?php
 
-namespace Aryala7\Chapaar\Exceptions;
+namespace TookanTech\Chapaar\Exceptions;
 
 abstract class BaseException extends \RuntimeException
 {

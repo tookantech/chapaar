@@ -1,6 +1,6 @@
 <?php
 
-namespace Aryala7\Chapaar\Tests\Entities;
+namespace TookanTech\Chapaar\Tests\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;

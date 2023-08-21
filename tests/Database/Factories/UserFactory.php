@@ -1,8 +1,8 @@
 <?php
 
-namespace Aryala7\Chapaar\Tests\Database\Factories;
+namespace TookanTech\Chapaar\Tests\Database\Factories;
 
-use Aryala7\Chapaar\Tests\Entities\TestUser;
+use TookanTech\Chapaar\Tests\Entities\TestUser;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class UserFactory extends Factory

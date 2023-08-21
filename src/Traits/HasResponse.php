@@ -1,6 +1,6 @@
 <?php
 
-namespace Aryala7\Chapaar\Traits;
+namespace TookanTech\Chapaar\Traits;
 
 trait HasResponse
 {

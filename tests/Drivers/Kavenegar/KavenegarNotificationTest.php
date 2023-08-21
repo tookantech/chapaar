@@ -1,7 +1,7 @@
 <?php
 
-use Aryala7\Chapaar\Tests\Database\Factories\UserFactory;
-use Aryala7\Chapaar\Tests\Notifications\InvoicePaid;
+use TookanTech\Chapaar\Tests\Database\Factories\UserFactory;
+use TookanTech\Chapaar\Tests\Notifications\InvoicePaid;
 use Illuminate\Support\Facades\Notification;
 use Mockery as m;
 
@@ -26,7 +26,7 @@ it('should return zero if parameters dont send correctly', function () {
         'cellphone' => '09201111111',
     ]);
     $notification = new InvoicePaid();
-    $channel = new \Aryala7\Chapaar\SmsChannel();
+    $channel = new \TookanTech\Chapaar\SmsChannel();
     $response = $channel->send($notifiable, $notification);
 
     expect($response)->toBe(0);

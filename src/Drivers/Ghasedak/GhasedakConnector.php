@@ -1,11 +1,11 @@
 <?php
 
-namespace Aryala7\Chapaar\Drivers\Ghasedak;
+namespace TookanTech\Chapaar\Drivers\Ghasedak;
 
-use Aryala7\Chapaar\Contracts\DriverConnector;
-use Aryala7\Chapaar\Exceptions\ApiException;
-use Aryala7\Chapaar\Exceptions\HttpException;
-use Aryala7\Chapaar\Traits\HasResponse;
+use TookanTech\Chapaar\Contracts\DriverConnector;
+use TookanTech\Chapaar\Exceptions\ApiException;
+use TookanTech\Chapaar\Exceptions\HttpException;
+use TookanTech\Chapaar\Traits\HasResponse;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Response;

@@ -1,9 +1,9 @@
 <?php
 
-namespace Aryala7\Chapaar;
+namespace TookanTech\Chapaar;
 
-use Aryala7\Chapaar\Contracts\DriverMessage;
-use Aryala7\Chapaar\Enums\Drivers;
+use TookanTech\Chapaar\Contracts\DriverMessage;
+use TookanTech\Chapaar\Enums\Drivers;
 
 class SmsMessage
 {

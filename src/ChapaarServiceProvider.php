@@ -1,6 +1,6 @@
 <?php
 
-namespace Aryala7\Chapaar;
+namespace TookanTech\Chapaar;
 
 use Illuminate\Support\Facades\Notification;
 use Spatie\LaravelPackageTools\Package;

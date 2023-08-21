@@ -1,13 +1,19 @@
 {
-    "name": "aryala7/chapaar",
+    "name": "TookanTech/chapaar",
     "description": "This is my package chapaar",
     "keywords": [
-        "aryala7",
+        "TookanTech",
         "laravel",
+        "smsir",
+        "kavenegar",
+        "ghasedak",
+        "farapayamak",
+        "farazsms",
+        "twillo",
         "chapaar"
     ],
     "type": "library",
-    "homepage": "https://github.com/aryala7/chapaar",
+    "homepage": "https://github.com/TookanTech/chapaar",
     "license": "MIT",
     "authors": [
         {
@@ -38,13 +44,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Aryala7\\Chapaar\\": "src/",
-            "Aryala7\\Chapaar\\Database\\Factories\\": "database/factories/"
+            "TookanTech\\Chapaar\\": "src/",
+            "TookanTech\\Chapaar\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Aryala7\\Chapaar\\Tests\\": "tests/"
+            "TookanTech\\Chapaar\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -64,10 +70,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Aryala7\\Chapaar\\ChapaarServiceProvider"
+                "TookanTech\\Chapaar\\ChapaarServiceProvider"
             ],
             "aliases": {
-                "Chapaar": "Aryala7\\Chapaar\\Facades\\Chapaar"
+                "Chapaar": "TookanTech\\Chapaar\\Facades\\Chapaar"
             }
         }
     },

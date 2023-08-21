@@ -59,8 +59,8 @@ If you want to use the Chapaar package without Laravel's built-in notification s
 
 Sending a Simple Message
 ```php
-use Aryala7\Chapaar\Facades\Chapaar;
-use Aryala7\Chapaar\SmsMessage;
+use TookanTech\Chapaar\Facades\Chapaar;
+use TookanTech\Chapaar\SmsMessage;
 
 $message = new SmsMessage(); // Replace with your message implementation
 $message->driver()
@@ -74,8 +74,8 @@ $response = Chapaar::send($message);
 
 Sending With Template Message
 ```php
-use Aryala7\Chapaar\Facades\Chapaar;
-use Aryala7\Chapaar\SmsMessage;
+use TookanTech\Chapaar\Facades\Chapaar;
+use TookanTech\Chapaar\SmsMessage;
 $message = new SmsMessage();
 $message
     ->driver()
@@ -99,7 +99,7 @@ $response = Chapaar::verify($message);
 Please review [laravel notifications](https://laravel.com/docs/10.x/notifications) on how use notifications in laravel.
 
 ```php
-use Aryala7\Chapaar\SmsChannel;
+use TookanTech\Chapaar\SmsChannel;
 class InvoicePaid extends KavenegarBaseNotification
 {
     public function via($notifiable): array
@@ -146,7 +146,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 - [tookantech](https://github.com/TookanTech)
-- [arya](https://github.com/aryala7)
+- [arya](https://github.com/TookanTech)
 
 ## License
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Aryala7\Chapaar\Drivers\Kavenegar;
+namespace TookanTech\Chapaar\Drivers\Kavenegar;
 
-use Aryala7\Chapaar\Contracts\DriverMessage;
+use TookanTech\Chapaar\Contracts\DriverMessage;
 
 /*
  * @method setTemplate

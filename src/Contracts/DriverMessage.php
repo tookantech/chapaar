@@ -1,6 +1,6 @@
 <?php
 
-namespace Aryala7\Chapaar\Contracts;
+namespace TookanTech\Chapaar\Contracts;
 
 interface DriverMessage
 {

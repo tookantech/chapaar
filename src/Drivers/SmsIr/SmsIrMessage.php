@@ -1,8 +1,8 @@
 <?php
 
-namespace Aryala7\Chapaar\Drivers\SmsIr;
+namespace TookanTech\Chapaar\Drivers\SmsIr;
 
-use Aryala7\Chapaar\Contracts\DriverMessage;
+use TookanTech\Chapaar\Contracts\DriverMessage;
 
 class SmsIrMessage implements DriverMessage
 {
