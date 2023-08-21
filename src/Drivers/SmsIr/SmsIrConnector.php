@@ -13,26 +13,19 @@ class SmsIrConnector implements DriverConnector
 {
     use HasResponse;
 
-    protected object $setting;
-
     protected Client $client;
 
     public function __construct()
     {
-        $this->setting = (object) config('chapaar.drivers.smsir');
+        self::$setting = (object) config('chapaar.drivers.smsir');
         $this->client = new Client([
             'headers' => [
-                'x-api-key' => $this->setting->api_key,
+                'x-api-key' => self::$setting->api_key,
                 'Accept' => 'text/plain',
                 'Content-Type' => 'application/json',
             ],
         ]);
 
-    }
-
-    public function generatePath($method, string $base = 'send'): string
-    {
-        return sprintf($this->setting->url, $this->setting->version, $base, $method);
     }
 
     /**
@@ -42,9 +35,9 @@ class SmsIrConnector implements DriverConnector
      */
     public function send($message): object
     {
-        $url = self::generatePath('bulk');
+        $url = self::endpoint('send','sms');
         $params = [
-            'lineNumber' => $message->getFrom() ?: $this->setting->line_number,
+            'lineNumber' => $message->getFrom() ?: self::$setting->line_number,
             'MessageText' => $message->getContent(),
             'Mobiles' => $message->getTo(),
             'SendDateTime' => $message->dateTime ?? null,
@@ -60,9 +53,11 @@ class SmsIrConnector implements DriverConnector
      */
     public function verify($message): object
     {
-        $url = self::generatePath('verify');
+        $receiver = $message->getTo();
+        $receiver = is_array($receiver) ? reset($receiver) : $receiver;
+        $url = self::endpoint('send','verify');
         $params = [
-            'mobile' => $message->getTo(),
+            'mobile' => $receiver,
             'templateId' => (int) $message->getTemplate(),
             'parameters' => $message->getTokens(),
         ];
@@ -74,7 +69,16 @@ class SmsIrConnector implements DriverConnector
     /**
      * @throws GuzzleException
      */
-    public function performApi(string $url, array $params): object
+    public function account(): object
+    {
+        $url = self::endpoint('credit');
+        return $this->performApi($url);
+    }
+
+    /**
+     * @throws GuzzleException
+     */
+    public function performApi(string $url, array $params = []): object
     {
         $response = $this->client->post($url, [
             'json' => $params,

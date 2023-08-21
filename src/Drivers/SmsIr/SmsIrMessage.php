@@ -6,13 +6,13 @@ use Aryala7\Chapaar\Contracts\DriverMessage;
 
 class SmsIrMessage implements DriverMessage
 {
-    protected string $content;
+    protected string $content = '';
 
-    protected string $from;
+    protected string $from = '';
 
-    protected array|string $to;
+    protected array|string $to = '';
 
-    protected int $template;
+    protected int $template = 0;
 
     protected array $tokens = [];
 
