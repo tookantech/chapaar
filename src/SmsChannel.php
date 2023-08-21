@@ -8,18 +8,10 @@ use Aryala7\Chapaar\Facades\Chapaar;
 
 class SmsChannel
 {
-    protected object $setting;
-
     protected DriverConnector $driver;
 
     protected DriverMessage $message;
 
-    public function __construct()
-    {
-        $this->driver = Chapaar::getDefaultDriver();
-        $defaultDriverName = config('chapaar.default');
-        $this->setting = (object) config("chapaar.drivers.$defaultDriverName");
-    }
 
     public function send($notifiable, $notification)
     {
