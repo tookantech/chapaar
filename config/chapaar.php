@@ -9,7 +9,7 @@ return [
     'drivers' => [
         // Configuration for the 'kavenegar' driver
         'kavenegar' => [
-            'url' => '%s://api.kavenegar.com/v1/%s/%s/%s.json/',
+            'url' => '%s://api.kavenegar.com/v1/',
             'method' => 'post',
             'scheme' => 'http',
             'api_key' => '',
@@ -17,15 +17,15 @@ return [
         ],
         // Configuration for the 'smsir' driver
         'smsir' => [
-            'url' => 'https://api.sms.ir/%s/%s/%s',
+            'url' => 'https://api.sms.ir/v1/',
             'version' => 'v1',
             'api_key' => '',
             'line_number' => '',
         ],
         // Configuration for the 'ghasedak' driver
         'ghasedak' => [
-            'url' => 'http://api.ghasedak.me/%s/%s/%s/%s',
-            'version' => 'v1',
+            'url' => 'http://api.ghasedak.me/v2/',
+            'version' => 'v2',
             'api_key' => '',
             'line_number' => '',
         ],
