@@ -2,9 +2,9 @@
 
 namespace TookanTech\Chapaar\Tests;
 
-use TookanTech\Chapaar\ChapaarServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
+use TookanTech\Chapaar\ChapaarServiceProvider;
 
 class TestCase extends Orchestra
 {

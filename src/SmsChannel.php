@@ -4,14 +4,12 @@ namespace TookanTech\Chapaar;
 
 use TookanTech\Chapaar\Contracts\DriverConnector;
 use TookanTech\Chapaar\Contracts\DriverMessage;
-use TookanTech\Chapaar\Facades\Chapaar;
 
 class SmsChannel
 {
     protected DriverConnector $driver;
 
     protected DriverMessage $message;
-
 
     public function send($notifiable, $notification)
     {

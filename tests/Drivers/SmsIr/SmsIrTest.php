@@ -1,17 +1,17 @@
 <?php
 
-use TookanTech\Chapaar\Drivers\SmsIr\SmsIrConnector;
-use TookanTech\Chapaar\Drivers\SmsIr\SmsIrMessage;
-use TookanTech\Chapaar\Exceptions\ApiException;
 use GuzzleHttp\Psr7\Response as ApiResponse;
 use Mockery as m;
 use Symfony\Component\HttpFoundation\Response;
+use TookanTech\Chapaar\Drivers\SmsIr\SmsIrConnector;
+use TookanTech\Chapaar\Drivers\SmsIr\SmsIrMessage;
+use TookanTech\Chapaar\Exceptions\ApiException;
 
-beforeEach(fn() => config()->set('chapaar.default', 'smsir'));
+beforeEach(fn () => config()->set('chapaar.default', 'smsir'));
 afterEach(fn () => m::close());
 it('can generate endpoint', function () {
-    $endpoint = (new SmsIrConnector())::endpoint('send','sms');
-    expect($endpoint)->toBe("https://api.sms.ir/v1/send/sms");
+    $endpoint = (new SmsIrConnector())::endpoint('send', 'sms');
+    expect($endpoint)->toBe('https://api.sms.ir/v1/send/sms');
 });
 it('should select smsir based on config', function () {
     config()->set('chapaar.default', 'smsir');
@@ -45,7 +45,7 @@ it('can send with template', function () {
             ],
         ],
     ];
-    $expected_response = $this->generateResponse(1, 'success',$expected_data);
+    $expected_response = $this->generateResponse(1, 'success', $expected_data);
 
     $mockedMessage = m::mock(SmsIrMessage::class);
     $connector = m::mock(SmsIrConnector::class);

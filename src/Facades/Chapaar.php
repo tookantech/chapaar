@@ -2,8 +2,8 @@
 
 namespace TookanTech\Chapaar\Facades;
 
-use TookanTech\Chapaar\Contracts\DriverConnector;
 use Illuminate\Support\Facades\Facade;
+use TookanTech\Chapaar\Contracts\DriverConnector;
 
 /**
  * @see \TookanTech\Chapaar\Chapaar

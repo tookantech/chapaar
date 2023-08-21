@@ -2,8 +2,8 @@
 
 namespace TookanTech\Chapaar\Tests\Database\Factories;
 
-use TookanTech\Chapaar\Tests\Entities\TestUser;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use TookanTech\Chapaar\Tests\Entities\TestUser;
 
 class UserFactory extends Factory
 {

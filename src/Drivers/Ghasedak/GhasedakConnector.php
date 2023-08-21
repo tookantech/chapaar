@@ -2,18 +2,17 @@
 
 namespace TookanTech\Chapaar\Drivers\Ghasedak;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\Response;
 use TookanTech\Chapaar\Contracts\DriverConnector;
 use TookanTech\Chapaar\Exceptions\ApiException;
 use TookanTech\Chapaar\Exceptions\HttpException;
 use TookanTech\Chapaar\Traits\HasResponse;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Http\Response;
 
 class GhasedakConnector implements DriverConnector
 {
     use HasResponse;
-
 
     protected Client $client;
 
@@ -40,7 +39,7 @@ class GhasedakConnector implements DriverConnector
      */
     public function send($message): object
     {
-        $url = self::endpoint('sms','send','simple');
+        $url = self::endpoint('sms', 'send', 'simple');
         $params = [
             'linenumber' => $message->getFrom() ?: $this->setting->line_number,
             'message' => $message->getContent(),
@@ -58,7 +57,7 @@ class GhasedakConnector implements DriverConnector
      */
     public function verify($message): object
     {
-        $url = self::endpoint('verification','send','simple');
+        $url = self::endpoint('verification', 'send', 'simple');
         $params = [
             'receptor' => $message->getTo(),
             'type' => $message->getType(),
@@ -78,7 +77,8 @@ class GhasedakConnector implements DriverConnector
      */
     public function account(): object
     {
-        $url = self::endpoint('account','info');
+        $url = self::endpoint('account', 'info');
+
         return $this->performApi($url);
     }
 

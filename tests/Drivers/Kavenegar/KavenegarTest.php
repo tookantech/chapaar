@@ -1,17 +1,17 @@
 <?php
 
-use TookanTech\Chapaar\Drivers\Kavenegar\KavenegarConnector;
-use TookanTech\Chapaar\Drivers\Kavenegar\KavenegarMessage;
-use TookanTech\Chapaar\Exceptions\ApiException;
 use GuzzleHttp\Psr7\Response as ApiResponse;
 use Mockery as m;
 use Symfony\Component\HttpFoundation\Response;
+use TookanTech\Chapaar\Drivers\Kavenegar\KavenegarConnector;
+use TookanTech\Chapaar\Drivers\Kavenegar\KavenegarMessage;
+use TookanTech\Chapaar\Exceptions\ApiException;
 
-beforeEach(fn() => config()->set('chapaar.default', 'kavenegar'));
+beforeEach(fn () => config()->set('chapaar.default', 'kavenegar'));
 afterEach(fn () => m::close());
 it('can generate endpoint', function () {
-    $endpoint = (new KavenegarConnector())::endpoint('sms','send.json');
-    expect($endpoint)->toBe("https://api.kavenegar.com/v1/sms/send.json");
+    $endpoint = (new KavenegarConnector())::endpoint('sms', 'send.json');
+    expect($endpoint)->toBe('https://api.kavenegar.com/v1/sms/send.json');
 });
 it('should select kavenegar based on config', function () {
     config()->set('chapaar.default', 'kavenegar');

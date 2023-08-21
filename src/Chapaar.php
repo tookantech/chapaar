@@ -19,6 +19,7 @@ class Chapaar
     {
 
         $connector = Drivers::tryFrom(config('chapaar.default'))->connector();
+
         return new $connector;
 
     }

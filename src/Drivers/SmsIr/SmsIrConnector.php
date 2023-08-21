@@ -2,12 +2,12 @@
 
 namespace TookanTech\Chapaar\Drivers\SmsIr;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use TookanTech\Chapaar\Contracts\DriverConnector;
 use TookanTech\Chapaar\Exceptions\ApiException;
 use TookanTech\Chapaar\Exceptions\HttpException;
 use TookanTech\Chapaar\Traits\HasResponse;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 
 class SmsIrConnector implements DriverConnector
 {
@@ -35,7 +35,7 @@ class SmsIrConnector implements DriverConnector
      */
     public function send($message): object
     {
-        $url = self::endpoint('send','sms');
+        $url = self::endpoint('send', 'sms');
         $params = [
             'lineNumber' => $message->getFrom() ?: self::$setting->line_number,
             'MessageText' => $message->getContent(),
@@ -55,7 +55,7 @@ class SmsIrConnector implements DriverConnector
     {
         $receiver = $message->getTo();
         $receiver = is_array($receiver) ? reset($receiver) : $receiver;
-        $url = self::endpoint('send','verify');
+        $url = self::endpoint('send', 'verify');
         $params = [
             'mobile' => $receiver,
             'templateId' => (int) $message->getTemplate(),
@@ -72,6 +72,7 @@ class SmsIrConnector implements DriverConnector
     public function account(): object
     {
         $url = self::endpoint('credit');
+
         return $this->performApi($url);
     }
 

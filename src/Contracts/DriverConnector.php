@@ -4,7 +4,8 @@ namespace TookanTech\Chapaar\Contracts;
 
 interface DriverConnector
 {
-    public function account():object;
+    public function account(): object;
+
     public static function endpoint(...$params): string;
 
     public function performApi(string $url, array $params = []);

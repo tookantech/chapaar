@@ -2,13 +2,13 @@
 
 namespace TookanTech\Chapaar\Drivers\Kavenegar;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use Symfony\Component\HttpFoundation\Response;
 use TookanTech\Chapaar\Contracts\DriverConnector;
 use TookanTech\Chapaar\Exceptions\ApiException;
 use TookanTech\Chapaar\Exceptions\HttpException;
 use TookanTech\Chapaar\Traits\HasResponse;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
-use Symfony\Component\HttpFoundation\Response;
 
 class KavenegarConnector implements DriverConnector
 {
@@ -39,7 +39,7 @@ class KavenegarConnector implements DriverConnector
      */
     public function send($message): object
     {
-        $url = self::endpoint('sms','send.json');
+        $url = self::endpoint('sms', 'send.json');
         $params = [
             'receptor' => $message->getTo(),
             'message' => $message->getContent(),
@@ -59,7 +59,7 @@ class KavenegarConnector implements DriverConnector
      */
     public function verify($message): object
     {
-        $url = self::endpoint('verify','lookup.json');
+        $url = self::endpoint('verify', 'lookup.json');
         $params = [
             'receptor' => $message->getTo(),
             'template' => $message->getTemplate(),
@@ -79,7 +79,8 @@ class KavenegarConnector implements DriverConnector
      */
     public function account(): object
     {
-        $url = self::endpoint('account','info.json');
+        $url = self::endpoint('account', 'info.json');
+
         return $this->performApi($url);
     }
 

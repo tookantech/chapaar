@@ -2,9 +2,9 @@
 
 namespace TookanTech\Chapaar\Tests\Notifications;
 
+use Illuminate\Notifications\Notification;
 use TookanTech\Chapaar\Contracts\DriverMessage;
 use TookanTech\Chapaar\SmsMessage;
-use Illuminate\Notifications\Notification;
 
 class InvoicePaid extends Notification
 {
