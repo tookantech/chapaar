@@ -1,9 +1,18 @@
 <?php
 
-namespace Aryala7\Chapaar\Traits;
+namespace TookanTech\Chapaar\Traits;
 
 trait HasResponse
 {
+    protected static object $setting;
+
+    public static function endpoint(...$params): string
+    {
+        $params = implode('/', $params);
+
+        return self::$setting->url.$params;
+    }
+
     public function generateResponse(int $status, string $message, $data = null): object
     {
         return (object) [

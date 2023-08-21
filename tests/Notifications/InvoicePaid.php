@@ -1,10 +1,10 @@
 <?php
 
-namespace Aryala7\Chapaar\Tests\Notifications;
+namespace TookanTech\Chapaar\Tests\Notifications;
 
-use Aryala7\Chapaar\Contracts\DriverMessage;
-use Aryala7\Chapaar\SmsMessage;
 use Illuminate\Notifications\Notification;
+use TookanTech\Chapaar\Contracts\DriverMessage;
+use TookanTech\Chapaar\SmsMessage;
 
 class InvoicePaid extends Notification
 {

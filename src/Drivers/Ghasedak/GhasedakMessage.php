@@ -1,8 +1,8 @@
 <?php
 
-namespace Aryala7\Chapaar\Drivers\Ghasedak;
+namespace TookanTech\Chapaar\Drivers\Ghasedak;
 
-use Aryala7\Chapaar\Contracts\DriverMessage;
+use TookanTech\Chapaar\Contracts\DriverMessage;
 
 class GhasedakMessage implements DriverMessage
 {

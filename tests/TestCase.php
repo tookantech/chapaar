@@ -1,10 +1,10 @@
 <?php
 
-namespace Aryala7\Chapaar\Tests;
+namespace TookanTech\Chapaar\Tests;
 
-use Aryala7\Chapaar\ChapaarServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
+use TookanTech\Chapaar\ChapaarServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -13,7 +13,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Aryala7\\Chapaar\\Tests\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'TookanTech\\Chapaar\\Tests\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 

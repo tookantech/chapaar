@@ -1,20 +1,18 @@
 <?php
 
-namespace Aryala7\Chapaar\Drivers\Ghasedak;
+namespace TookanTech\Chapaar\Drivers\Ghasedak;
 
-use Aryala7\Chapaar\Contracts\DriverConnector;
-use Aryala7\Chapaar\Exceptions\ApiException;
-use Aryala7\Chapaar\Exceptions\HttpException;
-use Aryala7\Chapaar\Traits\HasResponse;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Response;
+use TookanTech\Chapaar\Contracts\DriverConnector;
+use TookanTech\Chapaar\Exceptions\ApiException;
+use TookanTech\Chapaar\Exceptions\HttpException;
+use TookanTech\Chapaar\Traits\HasResponse;
 
 class GhasedakConnector implements DriverConnector
 {
     use HasResponse;
-
-    protected object $setting;
 
     protected Client $client;
 
@@ -22,21 +20,16 @@ class GhasedakConnector implements DriverConnector
 
     public function __construct()
     {
-        $this->setting = (object) config('chapaar.drivers.ghasedak');
+        self::$setting = (object) config('chapaar.drivers.ghasedak');
         $this->client = new Client([
             'headers' => [
-                'apikey' => $this->setting->api_key,
+                'apikey' => self::$setting->api_key,
                 'Accept: application/json',
                 'Content-Type: application/x-www-form-urlencoded',
                 'charset: utf-8',
             ],
         ]);
 
-    }
-
-    public function generatePath($base, $action, $method): string
-    {
-        return sprintf($this->setting->url, $this->setting->version, $base, $action, $method);
     }
 
     /**
@@ -46,7 +39,7 @@ class GhasedakConnector implements DriverConnector
      */
     public function send($message): object
     {
-        $url = self::generatePath('sms', 'send', 'simple');
+        $url = self::endpoint('sms', 'send', 'simple');
         $params = [
             'linenumber' => $message->getFrom() ?: $this->setting->line_number,
             'message' => $message->getContent(),
@@ -64,7 +57,7 @@ class GhasedakConnector implements DriverConnector
      */
     public function verify($message): object
     {
-        $url = self::generatePath('verification', 'send', 'simple');
+        $url = self::endpoint('verification', 'send', 'simple');
         $params = [
             'receptor' => $message->getTo(),
             'type' => $message->getType(),
@@ -82,7 +75,17 @@ class GhasedakConnector implements DriverConnector
     /**
      * @throws GuzzleException
      */
-    public function performApi(string $url, array $params): object
+    public function account(): object
+    {
+        $url = self::endpoint('account', 'info');
+
+        return $this->performApi($url);
+    }
+
+    /**
+     * @throws GuzzleException
+     */
+    public function performApi(string $url, array $params = []): object
     {
         $response = $this->client->post($url, [
             'form_params' => $params,

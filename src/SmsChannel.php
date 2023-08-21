@@ -1,25 +1,15 @@
 <?php
 
-namespace Aryala7\Chapaar;
+namespace TookanTech\Chapaar;
 
-use Aryala7\Chapaar\Contracts\DriverConnector;
-use Aryala7\Chapaar\Contracts\DriverMessage;
-use Aryala7\Chapaar\Facades\Chapaar;
+use TookanTech\Chapaar\Contracts\DriverConnector;
+use TookanTech\Chapaar\Contracts\DriverMessage;
 
 class SmsChannel
 {
-    protected object $setting;
-
     protected DriverConnector $driver;
 
     protected DriverMessage $message;
-
-    public function __construct()
-    {
-        $this->driver = Chapaar::getDefaultDriver();
-        $defaultDriverName = config('chapaar.default');
-        $this->setting = (object) config("chapaar.drivers.$defaultDriverName");
-    }
 
     public function send($notifiable, $notification)
     {

@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) aryala7 <arya.lavasani@gmail.com>
+Copyright (c) TookanTech <arya.lavasani@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

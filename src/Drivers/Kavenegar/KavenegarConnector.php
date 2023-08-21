@@ -1,20 +1,20 @@
 <?php
 
-namespace Aryala7\Chapaar\Drivers\Kavenegar;
+namespace TookanTech\Chapaar\Drivers\Kavenegar;
 
-use Aryala7\Chapaar\Contracts\DriverConnector;
-use Aryala7\Chapaar\Exceptions\ApiException;
-use Aryala7\Chapaar\Exceptions\HttpException;
-use Aryala7\Chapaar\Traits\HasResponse;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\HttpFoundation\Response;
+use TookanTech\Chapaar\Contracts\DriverConnector;
+use TookanTech\Chapaar\Exceptions\ApiException;
+use TookanTech\Chapaar\Exceptions\HttpException;
+use TookanTech\Chapaar\Traits\HasResponse;
 
 class KavenegarConnector implements DriverConnector
 {
     use HasResponse;
 
-    protected object $setting;
+    protected static object $setting;
 
     protected Client $client;
 
@@ -29,12 +29,7 @@ class KavenegarConnector implements DriverConnector
             'verify' => false,
             'http_errors' => false,
         ]));
-        $this->setting = (object) config('chapaar.drivers.kavenegar');
-    }
-
-    public function generatePath($method, string $base = 'sms'): string
-    {
-        return sprintf($this->setting->url, $this->setting->scheme, $this->setting->api_key, $base, $method);
+        self::$setting = (object) config('chapaar.drivers.kavenegar');
     }
 
     /**
@@ -44,11 +39,11 @@ class KavenegarConnector implements DriverConnector
      */
     public function send($message): object
     {
-        $url = $this->generatePath('send');
+        $url = self::endpoint('sms', 'send.json');
         $params = [
             'receptor' => $message->getTo(),
             'message' => $message->getContent(),
-            'sender' => $message->getFrom() ?: $this->setting->line_number,
+            'sender' => $message->getFrom() ?: self::$setting->line_number,
             'date' => $message->getDate() ?? null,
             'type' => $message->getType() ?? null,
             'localid' => $message->getLocalId() ?? null,
@@ -64,7 +59,7 @@ class KavenegarConnector implements DriverConnector
      */
     public function verify($message): object
     {
-        $url = $this->generatePath('lookup', 'verify');
+        $url = self::endpoint('verify', 'lookup.json');
         $params = [
             'receptor' => $message->getTo(),
             'template' => $message->getTemplate(),
@@ -82,7 +77,17 @@ class KavenegarConnector implements DriverConnector
     /**
      * @throws GuzzleException
      */
-    public function performApi(string $url, array $params): object
+    public function account(): object
+    {
+        $url = self::endpoint('account', 'info.json');
+
+        return $this->performApi($url);
+    }
+
+    /**
+     * @throws GuzzleException
+     */
+    public function performApi(string $url, array $params = []): object
     {
         $response = $this->client->post($url, [
             'form_params' => $params,

@@ -1,12 +1,9 @@
 <?php
 
-namespace Aryala7\Chapaar;
+namespace TookanTech\Chapaar;
 
-use Aryala7\Chapaar\Contracts\DriverMessage;
-use Aryala7\Chapaar\Drivers\Ghasedak\GhasedakMessage;
-use Aryala7\Chapaar\Drivers\Kavenegar\KavenegarMessage;
-use Aryala7\Chapaar\Drivers\SmsIr\SmsIrMessage;
-use Aryala7\Chapaar\Exceptions\DriverNotFoundException;
+use TookanTech\Chapaar\Contracts\DriverMessage;
+use TookanTech\Chapaar\Enums\Drivers;
 
 class SmsMessage
 {
@@ -16,16 +13,7 @@ class SmsMessage
 
     public function __construct()
     {
-
-        $default_driver = config('chapaar.default');
-        $this->message_driver = match ($default_driver) {
-            'kavenegar' => KavenegarMessage::class,
-            'smsir' => SmsIrMessage::class,
-            'ghasedak' => GhasedakMessage::class,
-            default => function () {
-                throw new DriverNotFoundException('Unknown Driver'.config('chapaar.default'));
-            }
-        };
+        $this->message_driver = Drivers::tryFrom(config('chapaar.default'))->message();
     }
 
     public function driver(): DriverMessage

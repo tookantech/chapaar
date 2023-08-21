@@ -1,18 +1,18 @@
 <?php
 
-namespace Aryala7\Chapaar\Drivers\SmsIr;
+namespace TookanTech\Chapaar\Drivers\SmsIr;
 
-use Aryala7\Chapaar\Contracts\DriverMessage;
+use TookanTech\Chapaar\Contracts\DriverMessage;
 
 class SmsIrMessage implements DriverMessage
 {
-    protected string $content;
+    protected string $content = '';
 
-    protected string $from;
+    protected string $from = '';
 
-    protected array|string $to;
+    protected array|string $to = '';
 
-    protected int $template;
+    protected int $template = 0;
 
     protected array $tokens = [];
 

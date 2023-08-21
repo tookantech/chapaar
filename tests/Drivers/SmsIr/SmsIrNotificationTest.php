@@ -5,7 +5,7 @@ use Mockery as m;
 use TookanTech\Chapaar\Tests\Database\Factories\UserFactory;
 use TookanTech\Chapaar\Tests\Notifications\InvoicePaid;
 
-beforeEach(fn () => config()->set('chapaar.default', 'kavenegar'));
+beforeEach(fn () => config()->set('chapaar.default', 'smsir'));
 afterEach(fn () => m::close());
 it('should send notification to the user', function () {
 
@@ -15,7 +15,6 @@ it('should send notification to the user', function () {
     Notification::fake();
     $user->notify(new InvoicePaid());
     Notification::assertSentTo($user, InvoicePaid::class);
-
     Notification::assertSentTimes(InvoicePaid::class, 1);
 
 });
