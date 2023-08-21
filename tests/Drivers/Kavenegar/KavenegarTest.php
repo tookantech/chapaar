@@ -7,7 +7,12 @@ use GuzzleHttp\Psr7\Response as ApiResponse;
 use Mockery as m;
 use Symfony\Component\HttpFoundation\Response;
 
+beforeEach(fn() => config()->set('chapaar.default', 'kavenegar'));
 afterEach(fn () => m::close());
+it('can generate endpoint', function () {
+    $endpoint = (new KavenegarConnector())::endpoint('sms','send.json');
+    expect($endpoint)->toBe("https://api.kavenegar.com/v1/sms/send.json");
+});
 it('should select kavenegar based on config', function () {
     config()->set('chapaar.default', 'kavenegar');
     $driver = (new \Aryala7\Chapaar\SmsMessage())->driver();
@@ -22,7 +27,7 @@ it('can send plain message', function () {
     $connector = m::mock(KavenegarConnector::class);
 
     $connector->shouldReceive('send')->once()->with($mockedMessage)->andReturn($expected_response);
-    $connector->shouldReceive('generatePath')->with('path')->andReturn('path_response');
+    $connector->shouldReceive('endpoint')->with('path')->andReturn('path_response');
     $connector->shouldReceive('performApi')->with('path_response', m::type('array'))->andReturn($expected_response);
     // Act
     $result = $connector->send($mockedMessage);
