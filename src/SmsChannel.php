@@ -11,7 +11,6 @@ class SmsChannel
 
     protected DriverMessage $message;
 
-
     public function __construct()
     {
         $this->driver = \TookanTech\Chapaar\Facades\Chapaar::getDefaultDriver();

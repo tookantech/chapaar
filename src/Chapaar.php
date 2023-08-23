@@ -24,7 +24,7 @@ class Chapaar
 
     }
 
-    public function send( $message)
+    public function send($message)
     {
         return $this->driver->send($message);
     }
