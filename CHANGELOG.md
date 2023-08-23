@@ -2,6 +2,12 @@
 
 All notable changes to `chapaar` will be documented in this file.
 
+## 1.3.2 - 2023-08-23
+
+### Bug fix
+
+- fix kavenegar sending sms
+
 ## fix config - 2023-08-23
 
 fix config
