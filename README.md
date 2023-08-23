@@ -71,7 +71,7 @@ $message = new SmsMessage(); // Replace with your message implementation
 $message->driver()
     ->setFrom('12345678')
     ->setTo('0912111111')
-    ->content('Hello, this is a test message.');
+    ->setContent('Hello, this is a test message.');
 
 $response = Chapaar::send($message);
 
@@ -84,16 +84,16 @@ use TookanTech\Chapaar\SmsMessage;
 $message = new SmsMessage();
 $message
     ->driver()
-    ->template("invoice-paid")
-    ->to('recipient_number')
-    ->tokens(['123','456','789']);
+    ->setTemplate("invoice-paid")
+    ->setTo('recipient_number')
+    ->setTokens(['123','456','789']);
     
 # SmsIr
 $message
     ->driver()
-    ->template("invoice-paid")
-    ->to('recipient_number')
-    ->tokens([
+    ->setTemplate("invoice-paid")
+    ->setTo('recipient_number')
+    ->setTokens([
         ['name' => 'code' , 'value' => '123']
     ]);
 
