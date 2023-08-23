@@ -39,7 +39,8 @@ class KavenegarConnector implements DriverConnector
      */
     public function send($message): object
     {
-        $url = self::endpoint('sms', 'send.json');
+        $url = self::endpoint(self::$setting->api_key, 'sms', 'send.json');
+
         $params = [
             'receptor' => $message->getTo(),
             'message' => $message->getContent(),
@@ -59,7 +60,8 @@ class KavenegarConnector implements DriverConnector
      */
     public function verify($message): object
     {
-        $url = self::endpoint('verify', 'lookup.json');
+        $url = self::endpoint(self::$setting->api_key, 'verify', 'lookup.json');
+
         $params = [
             'receptor' => $message->getTo(),
             'template' => $message->getTemplate(),
@@ -79,7 +81,7 @@ class KavenegarConnector implements DriverConnector
      */
     public function account(): object
     {
-        $url = self::endpoint('account', 'info.json');
+        $url = self::endpoint(self::$setting->api_key, 'account', 'info.json');
 
         return $this->performApi($url);
     }

@@ -8,8 +8,8 @@ use TookanTech\Chapaar\Contracts\DriverConnector;
 /**
  * @see \TookanTech\Chapaar\Chapaar
  *
- * @method DriverConnector send()
- * @method DriverConnector verify()
+ * @method DriverConnector send( $message)
+ * @method DriverConnector verify( $message)
  */
 class Chapaar extends Facade
 {

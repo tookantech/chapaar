@@ -4,19 +4,19 @@ namespace TookanTech\Chapaar\Contracts;
 
 interface DriverMessage
 {
-    public function setFrom($from);
+    public function setFrom($from): self;
 
     public function getFrom();
 
-    public function setTo($to);
+    public function setTo($to): self;
 
     public function getTo();
 
-    public function setContent(string $content);
+    public function setContent(string $content): self;
 
-    public function setTemplate($template);
+    public function setTemplate($template): self;
 
     public function getTemplate();
 
-    public function setTokens(array $tokens);
+    public function setTokens(array $tokens): self;
 }
