@@ -7,7 +7,12 @@
 
 This package provides a flexible way to send and verify messages through various SMS providers. It offers integration with multiple drivers, making it easy to use different SMS service providers without getting locked into a specific one.
 
-## Support us
+## Available Drivers
+* Kavenegar (tested)
+* SmsIr (tested)
+* Ghasedak (under maintenance)
+* Farapayamk (coming soon)
+* Twillo (comming soon)
 
 
 ## Installation
