@@ -11,6 +11,12 @@ class SmsChannel
 
     protected DriverMessage $message;
 
+
+    public function __construct()
+    {
+        $this->driver = \TookanTech\Chapaar\Facades\Chapaar::getDefaultDriver();
+    }
+
     public function send($notifiable, $notification)
     {
 
@@ -18,6 +24,7 @@ class SmsChannel
         $message = $notification->toSms($notifiable);
 
         $recipient = $message->getTo() ?: $notifiable->routeNotificationFor('sms', $notification);
+        $message->setTo($recipient);
         $template = $message->getTemplate();
         if (! $recipient || ! ($message->getFrom() || $message->getTemplate())) {
             return 0;

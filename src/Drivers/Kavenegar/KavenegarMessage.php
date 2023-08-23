@@ -24,9 +24,9 @@ class KavenegarMessage implements DriverMessage
 
     protected array $tokens = [];
 
-    protected string $date;
+    protected string $date = '';
 
-    protected string $local_id;
+    protected string $local_id = '';
 
     public function getType(): ?string
     {
