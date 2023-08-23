@@ -1,9 +1,11 @@
 {
     "name": "tookantech/chapaar",
-    "description": "This is my package chapaar",
+    "description": "This package provides a flexible way to send and verify messages through various SMS providers. It offers integration with multiple drivers, making it easy to use different SMS service providers without getting locked into a specific one.",
     "keywords": [
         "TookanTech",
         "laravel",
+        "sms",
+        "notification",
         "smsir",
         "kavenegar",
         "ghasedak",
@@ -17,7 +19,7 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "arya",
+            "name": "Arya",
             "email": "arya.lavasani@gmail.com",
             "role": "Developer"
         }
