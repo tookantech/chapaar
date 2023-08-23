@@ -20,7 +20,7 @@ This package provides a flexible way to send and verify messages through various
 You can install the package via composer:
 
 ```bash
-composer require TookanTech/chapaar
+composer require tookantech/chapaar
 ```
 
 
