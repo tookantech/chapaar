@@ -2,6 +2,10 @@
 
 All notable changes to `chapaar` will be documented in this file.
 
+## fix config - 2023-08-23
+
+fix config
+
 ## 1.3.0 - 2023-08-21
 
 add account method to all available drivers
