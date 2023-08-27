@@ -44,6 +44,7 @@ class SmsIrConnector implements DriverConnector
         ];
 
         $response = $this->performApi($url, $params);
+
         return $this->generateResponse($response->status, $response?->message, (array) $response?->data);
     }
 
@@ -64,6 +65,7 @@ class SmsIrConnector implements DriverConnector
         ];
 
         $response = $this->performApi($url, $params);
+
         return $this->generateResponse($response->status, $response?->message, (array) $response?->data);
 
     }
@@ -76,6 +78,7 @@ class SmsIrConnector implements DriverConnector
         $url = self::endpoint('credit');
 
         $response = $this->performApi($url);
+
         return $this->generateAccountResponse($response->status, $response?->message, (array) $response?->data);
     }
 
@@ -87,6 +90,7 @@ class SmsIrConnector implements DriverConnector
         $response = $this->client->post($url, [
             'json' => $params,
         ]);
+
         return $this->processApiResponse($response);
     }
 
@@ -109,8 +113,7 @@ class SmsIrConnector implements DriverConnector
             'data' => [
                 'credit' => $response->data,
                 'expire_date' => null,
-            ]
+            ],
         ];
     }
-
 }

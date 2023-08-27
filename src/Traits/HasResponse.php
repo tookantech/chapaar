@@ -27,6 +27,7 @@ trait HasResponse
         $status_code = $response->getStatusCode();
         $json_response = json_decode($response->getBody()->getContents());
         $this->validateResponseStatus($status_code, $json_response);
+
         return $json_response;
     }
 }

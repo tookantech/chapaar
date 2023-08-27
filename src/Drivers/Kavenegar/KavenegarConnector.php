@@ -48,7 +48,8 @@ class KavenegarConnector implements DriverConnector
             'localid' => $message->getLocalId() ?? null,
         ];
 
-        $response =  $this->performApi($url, $params);
+        $response = $this->performApi($url, $params);
+
         return $this->generateResponse($response->return?->status, $response->return?->message, (array) $response?->entries);
     }
 
@@ -72,7 +73,8 @@ class KavenegarConnector implements DriverConnector
             'type' => $message->getType() ?? null,
         ];
 
-        $response =  $this->performApi($url, $params);
+        $response = $this->performApi($url, $params);
+
         return $this->generateResponse($response->return?->status, $response->return?->message, (array) $response?->entries);
     }
 
@@ -83,6 +85,7 @@ class KavenegarConnector implements DriverConnector
     {
         $url = self::endpoint(self::$setting->api_key, 'account', 'info.json');
         $response = $this->performApi($url);
+
         return $this->generateAccountResponse($response);
     }
 
@@ -119,7 +122,7 @@ class KavenegarConnector implements DriverConnector
             'data' => [
                 'credit' => $entries?->remaincredit,
                 'expire_date' => $entries?->expiredate,
-            ]
+            ],
         ];
     }
 }
