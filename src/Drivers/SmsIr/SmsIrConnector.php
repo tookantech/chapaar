@@ -43,7 +43,8 @@ class SmsIrConnector implements DriverConnector
             'SendDateTime' => $message->dateTime ?? null,
         ];
 
-        return $this->performApi($url, $params);
+        $response = $this->performApi($url, $params);
+        return $this->generateResponse($response->status, $response?->message, (array) $response?->data);
     }
 
     /**
@@ -62,7 +63,8 @@ class SmsIrConnector implements DriverConnector
             'parameters' => $message->getTokens(),
         ];
 
-        return $this->performApi($url, $params);
+        $response = $this->performApi($url, $params);
+        return $this->generateResponse($response->status, $response?->message, (array) $response?->data);
 
     }
 
@@ -73,7 +75,8 @@ class SmsIrConnector implements DriverConnector
     {
         $url = self::endpoint('credit');
 
-        return $this->performApi($url);
+        $response = $this->performApi($url);
+        return $this->generateAccountResponse($response->status, $response?->message, (array) $response?->data);
     }
 
     /**
@@ -84,17 +87,7 @@ class SmsIrConnector implements DriverConnector
         $response = $this->client->post($url, [
             'json' => $params,
         ]);
-
         return $this->processApiResponse($response);
-    }
-
-    protected function processApiResponse($response): object
-    {
-        $status_code = $response->getStatusCode();
-        $json_response = json_decode($response->getBody()->getContents());
-        $this->validateResponseStatus($status_code, $json_response);
-
-        return $this->generateResponse($json_response->status, $json_response?->message, (array) $json_response?->data);
     }
 
     protected function validateResponseStatus($status_code, $json_response): void
@@ -107,4 +100,17 @@ class SmsIrConnector implements DriverConnector
             throw new ApiException($json_response->message, $json_response->status);
         }
     }
+
+    public function generateAccountResponse($response): object
+    {
+        return (object) [
+            'status' => $response->status,
+            'message' => $response->message,
+            'data' => [
+                'credit' => $response->data,
+                'expire_date' => null,
+            ]
+        ];
+    }
+
 }

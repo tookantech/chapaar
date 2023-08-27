@@ -44,13 +44,11 @@ return [
             'scheme' => 'http',
             'api_key' => '',
             'line_number' => '1000689696',
-            'template' => '',
         ],
         'smsir' => [
             'version' => 'v1',
             'api_key' => '',
             'line_number' => '1000689696',
-            'template_id' => '',
         ],
     ],
 ];
@@ -67,8 +65,7 @@ Sending a Simple Message
 use TookanTech\Chapaar\Facades\Chapaar;
 use TookanTech\Chapaar\SmsMessage;
 
-$message = new SmsMessage(); // Replace with your message implementation
-$message->driver()
+$message = (new SmsMessage())->driver()
     ->setFrom('12345678')
     ->setTo('0912111111')
     ->setContent('Hello, this is a test message.');
@@ -81,8 +78,7 @@ Sending With Template Message
 ```php
 use TookanTech\Chapaar\Facades\Chapaar;
 use TookanTech\Chapaar\SmsMessage;
-$message = new SmsMessage();
-$message
+$message =(new SmsMessage())
     ->driver()
     ->setTemplate("invoice-paid")
     ->setTo('recipient_number')

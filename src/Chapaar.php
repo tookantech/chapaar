@@ -15,6 +15,11 @@ class Chapaar
         $this->driver = $this->getDefaultDriver();
     }
 
+    public function getDefaultSetting()
+    {
+        return $this->driver::$setting;
+    }
+
     public function getDefaultDriver(): DriverConnector
     {
 
@@ -32,5 +37,10 @@ class Chapaar
     public function verify(DriverMessage $message)
     {
         return $this->driver->verify($message);
+    }
+
+    public function account()
+    {
+        return $this->driver->account();
     }
 }

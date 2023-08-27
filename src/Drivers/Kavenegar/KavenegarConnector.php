@@ -14,8 +14,6 @@ class KavenegarConnector implements DriverConnector
 {
     use HasResponse;
 
-    protected static object $setting;
-
     protected Client $client;
 
     public function __construct()
@@ -50,7 +48,8 @@ class KavenegarConnector implements DriverConnector
             'localid' => $message->getLocalId() ?? null,
         ];
 
-        return $this->performApi($url, $params);
+        $response =  $this->performApi($url, $params);
+        return $this->generateResponse($response->return?->status, $response->return?->message, (array) $response?->entries);
     }
 
     /**
@@ -73,7 +72,8 @@ class KavenegarConnector implements DriverConnector
             'type' => $message->getType() ?? null,
         ];
 
-        return $this->performApi($url, $params);
+        $response =  $this->performApi($url, $params);
+        return $this->generateResponse($response->return?->status, $response->return?->message, (array) $response?->entries);
     }
 
     /**
@@ -82,8 +82,8 @@ class KavenegarConnector implements DriverConnector
     public function account(): object
     {
         $url = self::endpoint(self::$setting->api_key, 'account', 'info.json');
-
-        return $this->performApi($url);
+        $response = $this->performApi($url);
+        return $this->generateAccountResponse($response);
     }
 
     /**
@@ -98,17 +98,6 @@ class KavenegarConnector implements DriverConnector
         return $this->processApiResponse($response);
     }
 
-    protected function processApiResponse($response): object
-    {
-        $status_code = $response->getStatusCode();
-        $json_response = json_decode($response->getBody()->getContents());
-
-        $this->validateResponseStatus($status_code, $json_response);
-
-        return $this->generateResponse($json_response->return?->status, $json_response->return?->message, (array) $json_response?->entries);
-
-    }
-
     protected function validateResponseStatus($status_code, $json_response): void
     {
         if ($json_response === null) {
@@ -117,5 +106,20 @@ class KavenegarConnector implements DriverConnector
         if ($json_response->return?->status !== Response::HTTP_OK) {
             throw new ApiException($json_response->return->message, $json_response->return->status);
         }
+    }
+
+    public function generateAccountResponse($response): object
+    {
+        $entries = $response?->entries;
+        $return = $response?->return;
+
+        return (object) [
+            'status' => $return?->status,
+            'message' => $return?->message,
+            'data' => [
+                'credit' => $entries?->remaincredit,
+                'expire_date' => $entries?->expiredate,
+            ]
+        ];
     }
 }

@@ -4,7 +4,7 @@ namespace TookanTech\Chapaar\Traits;
 
 trait HasResponse
 {
-    protected static object $setting;
+    public static object $setting;
 
     public static function endpoint(...$params): string
     {
@@ -20,5 +20,13 @@ trait HasResponse
             'message' => $message,
             'data' => $data,
         ];
+    }
+
+    protected function processApiResponse($response): object
+    {
+        $status_code = $response->getStatusCode();
+        $json_response = json_decode($response->getBody()->getContents());
+        $this->validateResponseStatus($status_code, $json_response);
+        return $json_response;
     }
 }
