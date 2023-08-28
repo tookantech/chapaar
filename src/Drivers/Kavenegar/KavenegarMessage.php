@@ -64,12 +64,12 @@ class KavenegarMessage implements DriverMessage
         return $this;
     }
 
-    public function getTo(): array|string
+    public function getTo(): string
     {
         return $this->to;
     }
 
-    public function setTo($to): static
+    public function setTo(array|string $to): static
     {
         if (is_array($to)) {
             $to = implode(',', $to);
