@@ -16,6 +16,8 @@ class SmsIrMessage implements DriverMessage
 
     protected array $tokens = [];
 
+    protected ?string $date = null;
+
     public function getContent(): string
     {
         return $this->content;
@@ -47,8 +49,11 @@ class SmsIrMessage implements DriverMessage
 
     public function setTo($to): static
     {
+        if (is_array($to) && $this->getTemplate()) {
+            $to = reset($to);
+        }
+        
         $this->to = $to;
-
         return $this;
     }
 
@@ -74,5 +79,15 @@ class SmsIrMessage implements DriverMessage
         $this->tokens = $tokens;
 
         return $this;
+    }
+
+    public function getDate(): ?string
+    {
+        return $this->date;
+    }
+
+    public function setDate(string $date): void
+    {
+        $this->date = $date;
     }
 }

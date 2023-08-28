@@ -40,12 +40,12 @@ class SmsIrConnector implements DriverConnector
             'lineNumber' => $message->getFrom() ?: self::$setting->line_number,
             'MessageText' => $message->getContent(),
             'Mobiles' => $message->getTo(),
-            'SendDateTime' => $message->dateTime ?? null,
+            'SendDateTime' => $message->getDate() ?? null,
         ];
 
         $response = $this->performApi($url, $params);
 
-        return $this->generateResponse($response->status, $response?->message, (array) $response?->data);
+        return $this->generateResponse($response->status, $response->message, (array) $response->data);
     }
 
     /**
@@ -56,7 +56,6 @@ class SmsIrConnector implements DriverConnector
     public function verify($message): object
     {
         $receiver = $message->getTo();
-        $receiver = is_array($receiver) ? reset($receiver) : $receiver;
         $url = self::endpoint('send', 'verify');
         $params = [
             'mobile' => $receiver,
@@ -66,7 +65,7 @@ class SmsIrConnector implements DriverConnector
 
         $response = $this->performApi($url, $params);
 
-        return $this->generateResponse($response->status, $response?->message, (array) $response?->data);
+        return $this->generateResponse($response->status, $response->message, (array) $response->data);
 
     }
 
@@ -79,7 +78,7 @@ class SmsIrConnector implements DriverConnector
 
         $response = $this->performApi($url);
 
-        return $this->generateAccountResponse($response->status, $response?->message, (array) $response?->data);
+        return $this->generateAccountResponse($response);
     }
 
     /**
