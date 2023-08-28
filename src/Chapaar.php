@@ -15,11 +15,17 @@ class Chapaar
         $this->driver = $this->getDefaultDriver();
     }
 
-    public function getDefaultSetting()
+    /**
+     * @return object
+     */
+    public function getDefaultSetting():object
     {
-        return $this->driver::$setting;
+        return $this->driver::setting();
     }
 
+    /**
+     * @return DriverConnector
+     */
     public function getDefaultDriver(): DriverConnector
     {
 
@@ -29,17 +35,28 @@ class Chapaar
 
     }
 
-    public function send($message)
+    /**
+     * @param $message
+     * @return object
+     */
+    public function send($message):object
     {
         return $this->driver->send($message);
     }
 
-    public function verify(DriverMessage $message)
+    /**
+     * @param DriverMessage $message
+     * @return object
+     */
+    public function verify(DriverMessage $message):object
     {
         return $this->driver->verify($message);
     }
 
-    public function account()
+    /**
+     * @return object
+     */
+    public function account():object
     {
         return $this->driver->account();
     }

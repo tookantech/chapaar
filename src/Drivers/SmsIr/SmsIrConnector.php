@@ -31,7 +31,7 @@ class SmsIrConnector implements DriverConnector
     /**
      * @param  SmsIrMessage  $message
      *
-     * @throws GuzzleException
+     * @throws GuzzleException|HttpException|ApiException
      */
     public function send($message): object
     {
@@ -59,7 +59,7 @@ class SmsIrConnector implements DriverConnector
         $url = self::endpoint('send', 'verify');
         $params = [
             'mobile' => $receiver,
-            'templateId' => (int) $message->getTemplate(),
+            'templateId' => $message->getTemplate(),
             'parameters' => $message->getTokens(),
         ];
 
@@ -93,6 +93,12 @@ class SmsIrConnector implements DriverConnector
         return $this->processApiResponse($response);
     }
 
+    /**
+     * @param $status_code
+     * @param $json_response
+     * @throws HttpException | ApiException
+     * @return void
+     */
     protected function validateResponseStatus($status_code, $json_response): void
     {
         if ($json_response === null) {
@@ -104,6 +110,10 @@ class SmsIrConnector implements DriverConnector
         }
     }
 
+    /**
+     * @param $response
+     * @return object
+     */
     public function generateAccountResponse($response): object
     {
         return (object) [
