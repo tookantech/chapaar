@@ -110,11 +110,6 @@ class GhasedakConnector implements DriverConnector
 
     }
 
-    /**
-     * @param $status_code
-     * @param $json_response
-     * @return void
-     */
     protected function validateResponseStatus($status_code, $json_response): void
     {
         if ($json_response === null) {

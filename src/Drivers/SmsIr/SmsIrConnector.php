@@ -94,10 +94,7 @@ class SmsIrConnector implements DriverConnector
     }
 
     /**
-     * @param $status_code
-     * @param $json_response
      * @throws HttpException | ApiException
-     * @return void
      */
     protected function validateResponseStatus($status_code, $json_response): void
     {
@@ -110,10 +107,6 @@ class SmsIrConnector implements DriverConnector
         }
     }
 
-    /**
-     * @param $response
-     * @return object
-     */
     public function generateAccountResponse($response): object
     {
         return (object) [

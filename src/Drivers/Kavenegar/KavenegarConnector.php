@@ -54,8 +54,6 @@ class KavenegarConnector implements DriverConnector
     }
 
     /**
-     * @param $message
-     * @return object
      * @throws GuzzleException
      */
     public function verify($message): object
@@ -79,7 +77,6 @@ class KavenegarConnector implements DriverConnector
     }
 
     /**
-     * @return object
      * @throws GuzzleException
      */
     public function account(): object
@@ -103,9 +100,6 @@ class KavenegarConnector implements DriverConnector
     }
 
     /**
-     * @param $status_code
-     * @param $json_response
-     * @return void
      * @throws HttpException|ApiException
      */
     protected function validateResponseStatus($status_code, $json_response): void
@@ -118,10 +112,6 @@ class KavenegarConnector implements DriverConnector
         }
     }
 
-    /**
-     * @param $response
-     * @return object
-     */
     public function generateAccountResponse($response): object
     {
         $entries = $response->entries;
