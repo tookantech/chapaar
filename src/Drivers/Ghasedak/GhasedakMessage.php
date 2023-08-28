@@ -6,13 +6,13 @@ use TookanTech\Chapaar\Contracts\DriverMessage;
 
 class GhasedakMessage implements DriverMessage
 {
-    protected string $content='';
+    protected string $content = '';
 
-    protected string $from='';
+    protected string $from = '';
 
-    protected string $to='';
+    protected string $to = '';
 
-    protected string $template='';
+    protected string $template = '';
 
     protected ?string $check_id = null;
 
@@ -54,12 +54,12 @@ class GhasedakMessage implements DriverMessage
         return $this->to;
     }
 
-    public function setTo(array | string $to): static
+    public function setTo(array|string $to): static
     {
-        if(is_array($to)) {
-            $to = $this->getTemplate() ? implode(',',$to) : reset($to);
+        if (is_array($to)) {
+            $to = $this->getTemplate() ? implode(',', $to) : reset($to);
         }
-        
+
         $this->to = $to;
 
         return $this;

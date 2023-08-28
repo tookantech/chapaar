@@ -52,8 +52,9 @@ class SmsIrMessage implements DriverMessage
         if (is_array($to) && $this->getTemplate()) {
             $to = reset($to);
         }
-        
+
         $this->to = $to;
+
         return $this;
     }
 
