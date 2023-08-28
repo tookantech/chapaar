@@ -125,15 +125,10 @@ class KavenegarConnector implements DriverConnector
     public function generateAccountResponse($response): object
     {
         $entries = $response->entries;
-        $return = $response->return;
 
         return (object) [
-            'status' => $return->status,
-            'message' => $return->message,
-            'data' => [
-                'credit' => $entries->remaincredit,
-                'expire_date' => $entries->expiredate,
-            ],
+            'credit' => $entries->remaincredit,
+            'expire_date' => $entries->expiredate,
         ];
     }
 }

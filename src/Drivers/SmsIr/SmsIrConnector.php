@@ -117,12 +117,8 @@ class SmsIrConnector implements DriverConnector
     public function generateAccountResponse($response): object
     {
         return (object) [
-            'status' => $response->status,
-            'message' => $response->message,
-            'data' => [
-                'credit' => $response->data,
-                'expire_date' => null,
-            ],
+            'credit' => $response->data,
+            'expire_date' => null,
         ];
     }
 }
