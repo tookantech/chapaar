@@ -2,6 +2,11 @@
 
 All notable changes to `chapaar` will be documented in this file.
 
+## 1.3.3 - 2023-08-28
+
+- fix type definitions
+- implement account Api in Ghasedak driver
+
 ## 1.3.2 - 2023-08-23
 
 ### Bug fix
