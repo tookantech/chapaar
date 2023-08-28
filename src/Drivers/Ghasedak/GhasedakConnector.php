@@ -25,6 +25,7 @@ class GhasedakConnector implements DriverConnector
             'headers' => [
                 'apikey' => self::$setting->api_key,
                 'Accept: application/json',
+                'cache-control' => 'no-cache',
                 'Content-Type: application/x-www-form-urlencoded',
                 'charset: utf-8',
             ],
@@ -44,10 +45,11 @@ class GhasedakConnector implements DriverConnector
             'linenumber' => $message->getFrom() ?: $this->setting->line_number,
             'message' => $message->getContent(),
             'receptor' => $message->getTo(),
-            'checkid' => $message->dateTime ?? null,
+            'senddate' => $message->getDate(),
+            'checkid' => $message->getCheckId() ?? null,
         ];
-
-        return $this->performApi($url, $params);
+        $response =  $this->performApi($url, $params);
+        return $this->generateResponse($response->result?->code, $response->result?->message, (array) $response->result?->items);
     }
 
     /**
@@ -68,7 +70,8 @@ class GhasedakConnector implements DriverConnector
 
         ];
 
-        return $this->performApi($url, $params);
+        $response =  $this->performApi($url, $params);
+        return $this->generateResponse($response->result?->code, $response->result?->message, (array) $response->result?->items);
 
     }
 
@@ -78,8 +81,8 @@ class GhasedakConnector implements DriverConnector
     public function account(): object
     {
         $url = self::endpoint('account', 'info');
-
-        return $this->performApi($url);
+        $response =  $this->performApi($url);
+        return $this->generateAccountResponse($response);
     }
 
     /**
@@ -99,8 +102,8 @@ class GhasedakConnector implements DriverConnector
         $status_code = $response->getStatusCode();
         $json_response = json_decode($response->getBody()->getContents());
         $this->validateResponseStatus($status_code, $json_response);
-
-        return $this->generateResponse($json_response->status, $json_response?->message, (array) $json_response?->data);
+        return  $json_response;
+       
     }
 
     protected function validateResponseStatus($status_code, $json_response): void
@@ -109,8 +112,22 @@ class GhasedakConnector implements DriverConnector
             throw new HttpException('Response is not valid JSON', $status_code);
         }
 
-        if ($json_response->status !== Response::HTTP_OK) {
-            throw new ApiException($json_response->message, $json_response->status);
+        if ($json_response->result->code !== Response::HTTP_OK) {
+            throw new ApiException($json_response->result->message, $json_response->result->code);
         }
+    }
+    public function generateAccountResponse($response): object
+    {
+        $result = $response?->result;
+        $items = $response?->items;
+
+        return (object) [
+            'status' => $result?->code,
+            'message' => $result?->message,
+            'data' => [
+                'credit' => $items?->balance,
+                'expire_date' => $items?->expire,
+            ],
+        ];
     }
 }

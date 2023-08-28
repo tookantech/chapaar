@@ -6,19 +6,19 @@ use TookanTech\Chapaar\Contracts\DriverMessage;
 
 class GhasedakMessage implements DriverMessage
 {
-    protected string $content;
+    protected string $content='';
 
-    protected string $from;
+    protected string $from='';
 
-    protected array|string $to;
+    protected string $to='';
 
-    protected string $template;
+    protected string $template='';
 
-    protected string $check_id;
+    protected ?string $check_id = null;
 
     protected array $tokens = [];
 
-    protected string $date;
+    protected ?string $date = null;
 
     /**
      * @var int Set 1 to send text message and 2 to send voice message.
@@ -49,13 +49,17 @@ class GhasedakMessage implements DriverMessage
         return $this;
     }
 
-    public function getTo(): array|string
+    public function getTo(): string
     {
         return $this->to;
     }
 
-    public function setTo($to): static
+    public function setTo(array | string $to): static
     {
+        if(is_array($to)) {
+            $to = $this->getTemplate() ? implode(',',$to) : reset($to);
+        }
+        
         $this->to = $to;
 
         return $this;
@@ -105,7 +109,7 @@ class GhasedakMessage implements DriverMessage
         $this->type = $type;
     }
 
-    public function getDate(): string
+    public function getDate(): ?string
     {
         return $this->date;
     }
