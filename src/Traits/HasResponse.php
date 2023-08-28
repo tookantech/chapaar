@@ -9,10 +9,6 @@ trait HasResponse
 {
     public static object $setting;
 
-    /**
-     * @param ...$params
-     * @return string
-     */
     public static function endpoint(...$params): string
     {
         $params = implode('/', $params);
@@ -20,20 +16,11 @@ trait HasResponse
         return self::$setting->url.$params;
     }
 
-    /**
-     * @return object
-     */
-    public static function setting():object
+    public static function setting(): object
     {
         return self::$setting;
     }
 
-    /**
-     * @param int $status
-     * @param string $message
-     * @param $data
-     * @return object
-     */
     public function generateResponse(int $status, string $message, $data = null): object
     {
         return (object) [
@@ -44,8 +31,6 @@ trait HasResponse
     }
 
     /**
-     * @param $response
-     * @return object
      * @throws HttpException | ApiException
      */
     protected function processApiResponse($response): object
