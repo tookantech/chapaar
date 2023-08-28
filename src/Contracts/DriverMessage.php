@@ -8,7 +8,7 @@ interface DriverMessage
 
     public function getFrom();
 
-    public function setTo($to): self;
+    public function setTo(array|string $to): self;
 
     public function getTo();
 
