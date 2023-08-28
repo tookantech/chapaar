@@ -48,7 +48,8 @@ class GhasedakConnector implements DriverConnector
             'senddate' => $message->getDate(),
             'checkid' => $message->getCheckId() ?? null,
         ];
-        $response =  $this->performApi($url, $params);
+        $response = $this->performApi($url, $params);
+
         return $this->generateResponse($response->result?->code, $response->result?->message, (array) $response->result?->items);
     }
 
@@ -70,7 +71,8 @@ class GhasedakConnector implements DriverConnector
 
         ];
 
-        $response =  $this->performApi($url, $params);
+        $response = $this->performApi($url, $params);
+
         return $this->generateResponse($response->result?->code, $response->result?->message, (array) $response->result?->items);
 
     }
@@ -81,7 +83,8 @@ class GhasedakConnector implements DriverConnector
     public function account(): object
     {
         $url = self::endpoint('account', 'info');
-        $response =  $this->performApi($url);
+        $response = $this->performApi($url);
+
         return $this->generateAccountResponse($response);
     }
 
@@ -102,8 +105,9 @@ class GhasedakConnector implements DriverConnector
         $status_code = $response->getStatusCode();
         $json_response = json_decode($response->getBody()->getContents());
         $this->validateResponseStatus($status_code, $json_response);
-        return  $json_response;
-       
+
+        return $json_response;
+
     }
 
     protected function validateResponseStatus($status_code, $json_response): void
@@ -116,6 +120,7 @@ class GhasedakConnector implements DriverConnector
             throw new ApiException($json_response->result->message, $json_response->result->code);
         }
     }
+
     public function generateAccountResponse($response): object
     {
         $result = $response?->result;
