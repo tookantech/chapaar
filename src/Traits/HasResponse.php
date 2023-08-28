@@ -2,6 +2,9 @@
 
 namespace TookanTech\Chapaar\Traits;
 
+use TookanTech\Chapaar\Exceptions\ApiException;
+use TookanTech\Chapaar\Exceptions\HttpException;
+
 trait HasResponse
 {
     public static object $setting;
@@ -13,6 +16,11 @@ trait HasResponse
         return self::$setting->url.$params;
     }
 
+    public static function setting(): object
+    {
+        return self::$setting;
+    }
+
     public function generateResponse(int $status, string $message, $data = null): object
     {
         return (object) [
@@ -22,6 +30,9 @@ trait HasResponse
         ];
     }
 
+    /**
+     * @throws HttpException | ApiException
+     */
     protected function processApiResponse($response): object
     {
         $status_code = $response->getStatusCode();

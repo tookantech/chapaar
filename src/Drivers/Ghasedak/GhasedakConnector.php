@@ -50,7 +50,7 @@ class GhasedakConnector implements DriverConnector
         ];
         $response = $this->performApi($url, $params);
 
-        return $this->generateResponse($response->result?->code, $response->result?->message, (array) $response->result?->items);
+        return $this->generateResponse($response->result->code, $response->result?->message, (array) $response->result?->items);
     }
 
     /**
@@ -123,16 +123,11 @@ class GhasedakConnector implements DriverConnector
 
     public function generateAccountResponse($response): object
     {
-        $result = $response?->result;
-        $items = $response?->items;
+        $result = $response->result;
 
         return (object) [
-            'status' => $result?->code,
-            'message' => $result?->message,
-            'data' => [
-                'credit' => $items?->balance,
-                'expire_date' => $items?->expire,
-            ],
+            'status' => $result->code,
+            'message' => $result->message,
         ];
     }
 }

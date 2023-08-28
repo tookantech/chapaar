@@ -50,12 +50,10 @@ class KavenegarConnector implements DriverConnector
 
         $response = $this->performApi($url, $params);
 
-        return $this->generateResponse($response->return?->status, $response->return?->message, (array) $response?->entries);
+        return $this->generateResponse($response->return->status, $response->return->message, (array) $response->entries);
     }
 
     /**
-     * @param  KavenegarMessage  $message
-     *
      * @throws GuzzleException
      */
     public function verify($message): object
@@ -75,7 +73,7 @@ class KavenegarConnector implements DriverConnector
 
         $response = $this->performApi($url, $params);
 
-        return $this->generateResponse($response->return?->status, $response->return?->message, (array) $response?->entries);
+        return $this->generateResponse($response->return->status, $response->return->message, (array) $response->entries);
     }
 
     /**
@@ -90,7 +88,7 @@ class KavenegarConnector implements DriverConnector
     }
 
     /**
-     * @throws GuzzleException
+     * @throws HttpException|ApiException|GuzzleException
      */
     public function performApi(string $url, array $params = []): object
     {
@@ -101,28 +99,26 @@ class KavenegarConnector implements DriverConnector
         return $this->processApiResponse($response);
     }
 
+    /**
+     * @throws HttpException|ApiException
+     */
     protected function validateResponseStatus($status_code, $json_response): void
     {
         if ($json_response === null) {
             throw new HttpException('Response is not valid JSON', $status_code);
         }
-        if ($json_response->return?->status !== Response::HTTP_OK) {
+        if ($json_response->return->status !== Response::HTTP_OK) {
             throw new ApiException($json_response->return->message, $json_response->return->status);
         }
     }
 
     public function generateAccountResponse($response): object
     {
-        $entries = $response?->entries;
-        $return = $response?->return;
+        $entries = $response->entries;
 
         return (object) [
-            'status' => $return?->status,
-            'message' => $return?->message,
-            'data' => [
-                'credit' => $entries?->remaincredit,
-                'expire_date' => $entries?->expiredate,
-            ],
+            'credit' => $entries->remaincredit,
+            'expire_date' => $entries->expiredate,
         ];
     }
 }

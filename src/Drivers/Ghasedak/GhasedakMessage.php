@@ -89,7 +89,7 @@ class GhasedakMessage implements DriverMessage
         return $this;
     }
 
-    public function getCheckId(): string
+    public function getCheckId(): ?string
     {
         return $this->check_id;
     }
