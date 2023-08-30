@@ -23,7 +23,7 @@ class GhasedakMessage implements DriverMessage
     /**
      * @var int Set 1 to send text message and 2 to send voice message.
      */
-    protected int $type;
+    protected int $type = 1;
 
     public function getContent(): string
     {
