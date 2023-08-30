@@ -1,23 +1,23 @@
-# This is my package chapaar
+# Chapaar | flexible way to send SMS through various SMS providers
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/TookanTech/chapaar.svg?style=flat-square)](https://packagist.org/packages/TookanTech/chapaar)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/TookanTech/chapaar/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/TookanTech/chapaar/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/TookanTech/chapaar/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/TookanTech/chapaar/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/TookanTech/chapaar.svg?style=flat-square)](https://packagist.org/packages/TookanTech/chapaar)
 
-This package provides a flexible way to send and verify messages through various SMS providers. It offers integration with multiple drivers, making it easy to use different SMS service providers without getting locked into a specific one.
+Chapaar offers flexible message sending and verification through multiple SMS providers, with easy integration and no lock-in to any specific provider.
 
 ## Available Drivers
 * [kavenegar.com](https://kavenegar.com/) (tested)
 * [sms.ir](https://sms.ir/) (tested)
 * [ghasedak.me](https://ghasedak.me/) (tested)
 * Farapayamk (coming soon)
-* Twillo (comming soon)
+* Twillo (coming soon)
 
 
 ## Installation
 
-You can install the package via composer:
+You can install the package via Composer:
 
 ```bash
 composer require tookantech/chapaar
