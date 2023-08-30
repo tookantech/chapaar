@@ -2,6 +2,12 @@
 
 All notable changes to `chapaar` will be documented in this file.
 
+## 1.4.0 - 2023-08-30
+
+- Implement Ghasedak.me sms driver.
+- Sms.ir bug fix.
+- Update readme.
+
 ## 1.3.4 - 2023-08-28
 
 fix doc annotations
