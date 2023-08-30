@@ -35,11 +35,11 @@ class SmsIrConnector implements DriverConnector
      */
     public function send($message): object
     {
-        $url = self::endpoint('send', 'sms');
+        $url = self::endpoint('send', 'bulk');
         $params = [
             'lineNumber' => $message->getFrom() ?: self::$setting->line_number,
             'MessageText' => $message->getContent(),
-            'Mobiles' => $message->getTo(),
+            'Mobiles' => (array)$message->getTo(),
             'SendDateTime' => $message->getDate() ?? null,
         ];
 
@@ -76,8 +76,9 @@ class SmsIrConnector implements DriverConnector
     {
         $url = self::endpoint('credit');
 
-        $response = $this->performApi($url);
-
+        //todo:: use performApi method by passing request type to the method
+        $response = $this->client->get($url);
+        $response =  $this->processApiResponse($response);
         return $this->generateAccountResponse($response);
     }
 
