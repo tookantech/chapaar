@@ -39,7 +39,7 @@ class SmsIrConnector implements DriverConnector
         $params = [
             'lineNumber' => $message->getFrom() ?: self::$setting->line_number,
             'MessageText' => $message->getContent(),
-            'Mobiles' => (array)$message->getTo(),
+            'Mobiles' => (array) $message->getTo(),
             'SendDateTime' => $message->getDate() ?? null,
         ];
 
@@ -78,7 +78,8 @@ class SmsIrConnector implements DriverConnector
 
         //todo:: use performApi method by passing request type to the method
         $response = $this->client->get($url);
-        $response =  $this->processApiResponse($response);
+        $response = $this->processApiResponse($response);
+
         return $this->generateAccountResponse($response);
     }
 

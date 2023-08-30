@@ -3,5 +3,5 @@
 return [
     'kavenegar' => 'کاوه‌نگار',
     'smsir' => 'اس‌ام‌اس آی‌آر',
-    'ghasedak' => 'قاصدک'
+    'ghasedak' => 'قاصدک',
 ];
