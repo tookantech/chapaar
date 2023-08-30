@@ -8,9 +8,9 @@
 This package provides a flexible way to send and verify messages through various SMS providers. It offers integration with multiple drivers, making it easy to use different SMS service providers without getting locked into a specific one.
 
 ## Available Drivers
-* Kavenegar (tested)
-* SmsIr (tested)
-* Ghasedak (under maintenance)
+* [kavenegar.com](https://kavenegar.com/) (tested)
+* [sms.ir](https://sms.ir/) (tested)
+* [ghasedak.me](https://ghasedak.me/) (tested)
 * Farapayamk (coming soon)
 * Twillo (comming soon)
 
@@ -40,15 +40,19 @@ return [
 
     'drivers' => [
         'kavenegar' => [
-            'method' => 'post',
-            'scheme' => 'http',
+            'url' => 'https://api.kavenegar.com/v1/',
             'api_key' => '',
-            'line_number' => '1000689696',
+            'line_number' => ''
         ],
         'smsir' => [
-            'version' => 'v1',
+            'url' => 'https://api.sms.ir/v1/',
             'api_key' => '',
-            'line_number' => '1000689696',
+            'line_number' => '',
+        ],
+        'ghasedak' => [
+            'url'         => 'https://api.ghasedak.me/v2/',
+            'api_key'     => '',
+            'line_number' => '',
         ],
     ],
 ];
@@ -78,19 +82,31 @@ Sending With Template Message
 ```php
 use TookanTech\Chapaar\Facades\Chapaar;
 use TookanTech\Chapaar\SmsMessage;
+
+#Kavenegar
 $message =(new SmsMessage())
     ->driver()
     ->setTemplate("invoice-paid")
-    ->setTo('recipient_number')
+    ->setTo('09121111111')
     ->setTokens(['123','456','789']);
     
 # SmsIr
-$message
+$message =(new SmsMessage())
     ->driver()
-    ->setTemplate("invoice-paid")
-    ->setTo('recipient_number')
+    ->setTemplate('100000')
+    ->setTo('09121111111')
     ->setTokens([
         ['name' => 'code' , 'value' => '123']
+    ]);
+    
+# Ghasedak
+$message =(new SmsMessage())
+    ->driver()
+    ->setTemplate("invoice-paid")
+    ->setTo('09121111111')
+    ->setTokens([
+      'param1' => 'test1',
+      'param2' => 'test2'
     ]);
 
 $response = Chapaar::verify($message);
@@ -147,7 +163,6 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 - [tookantech](https://github.com/TookanTech)
-- [arya](https://github.com/TookanTech)
 
 ## License
 
