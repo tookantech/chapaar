@@ -10,7 +10,7 @@ use TookanTech\Chapaar\Exceptions\ApiException;
 beforeEach(fn () => config()->set('chapaar.default', 'ghasedak'));
 afterEach(fn () => m::close());
 it('can generate endpoint', function () {
-    $endpoint = (new GhasedakConnector())::endpoint('sms', 'send','simple');
+    $endpoint = (new GhasedakConnector())::endpoint('sms', 'send', 'simple');
     expect($endpoint)->toBe('http://api.ghasedak.me/v2/sms/send/simple');
 });
 it('should select ghasedak based on config', function () {
@@ -43,7 +43,7 @@ it('can send with template', function () {
             'message' => 'success',
         ],
         'items' => [
-            2578793735
+            2578793735,
         ],
     ];
     $expected_response = $this->generateResponse(Response::HTTP_OK, 'success', $expected_data);
