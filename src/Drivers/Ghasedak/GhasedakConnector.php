@@ -25,7 +25,7 @@ class GhasedakConnector implements DriverConnector
             'headers' => [
                 'apikey' => self::$setting->api_key,
                 'cache-control' => 'no-cache',
-                'content-type' =>  'application/x-www-form-urlencoded',
+                'content-type' => 'application/x-www-form-urlencoded',
             ],
         ]);
 
@@ -58,14 +58,14 @@ class GhasedakConnector implements DriverConnector
      */
     public function verify($message): object
     {
-        $url = self::endpoint('verification', 'send','simple');
+        $url = self::endpoint('verification', 'send', 'simple');
         $params = [
             'receptor' => $message->getTo(),
             'type' => $message->getType(),
-            'template' => $message->getTemplate()
+            'template' => $message->getTemplate(),
         ];
 
-        $params = [...$params,...$message->getTokens()];
+        $params = [...$params, ...$message->getTokens()];
         $response = $this->performApi($url, $params);
 
         return $this->generateResponse($response->result->code, $response->result->message, (array) $response->items);
