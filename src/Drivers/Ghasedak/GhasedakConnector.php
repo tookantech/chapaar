@@ -24,10 +24,8 @@ class GhasedakConnector implements DriverConnector
         $this->client = new Client([
             'headers' => [
                 'apikey' => self::$setting->api_key,
-                'Accept: application/json',
                 'cache-control' => 'no-cache',
-                'Content-Type: application/x-www-form-urlencoded',
-                'charset: utf-8',
+                'content-type' => 'application/x-www-form-urlencoded',
             ],
         ]);
 
@@ -42,7 +40,7 @@ class GhasedakConnector implements DriverConnector
     {
         $url = self::endpoint('sms', 'send', 'simple');
         $params = [
-            'linenumber' => $message->getFrom() ?: $this->setting->line_number,
+            'linenumber' => $message->getFrom() ?: self::$setting->line_number,
             'message' => $message->getContent(),
             'receptor' => $message->getTo(),
             'senddate' => $message->getDate(),
@@ -64,13 +62,10 @@ class GhasedakConnector implements DriverConnector
         $params = [
             'receptor' => $message->getTo(),
             'type' => $message->getType(),
-            'template' => (int) $message->getTemplate(),
-            ...array_map(fn ($key, $arg) => ["param$key" => $arg], // param1,param2,...
-                array_keys($message->getTokens()), $message->getTokens()
-            ),
-
+            'template' => $message->getTemplate(),
         ];
 
+        $params = [...$params, ...$message->getTokens()];
         $response = $this->performApi($url, $params);
 
         return $this->generateResponse($response->result->code, $response->result->message, (array) $response->items);
