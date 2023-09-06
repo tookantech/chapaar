@@ -80,7 +80,22 @@ class SmsIrConnector implements DriverConnector
         $response = $this->client->get($url);
         $response = $this->processApiResponse($response);
 
-        return $this->generateAccountResponse($response);
+        return $this->generateAccountResponse($response->data,0);
+    }
+
+    /**
+     * @throws GuzzleException
+     */
+    public function outbox($page_size = 100,$page_number = 1): object
+    {
+        $url = self::endpoint('send','live') . "?PageSize=$page_size&PageNumber=$page_number";
+
+        $response = $this->client->get($url);
+        $response = $this->processApiResponse($response);
+
+        return collect($response->data)->map(function ($item){
+            return $this->generateReportResponse($item->messageId,$item->mobile,$item->messageText,$item->sendDateTime,$item->lineNumber,$item->cost);
+        });
     }
 
     /**
@@ -107,13 +122,5 @@ class SmsIrConnector implements DriverConnector
         if ($json_response->status !== 1) {
             throw new ApiException($json_response->message, $json_response->status);
         }
-    }
-
-    public function generateAccountResponse($response): object
-    {
-        return (object) [
-            'credit' => $response->data,
-            'expire_date' => null,
-        ];
     }
 }

@@ -80,7 +80,21 @@ class GhasedakConnector implements DriverConnector
         $url = self::endpoint('account', 'info');
         $response = $this->performApi($url);
 
-        return $this->generateAccountResponse($response);
+        $items = $response->items;
+        return $this->generateAccountResponse($items->balance,$items->expire);
+    }
+
+    /**
+     * @throws GuzzleException
+     */
+    public function outbox($page_size = 100,$page_number = 1): object
+    {
+        $url = self::endpoint('sms', 'status');
+        $response = $this->performApi($url);
+
+        return collect($response->items)->map(function ($item){
+            return $this->generateReportResponse($item->messageid,$item->receptor,$item->message,$item->senddate,$item->sender,$item->price);
+        });
     }
 
     /**
@@ -116,11 +130,4 @@ class GhasedakConnector implements DriverConnector
         }
     }
 
-    public function generateAccountResponse($response): object
-    {
-        return (object) [
-            'credit' => $response->items->balance,
-            'expire_date' => $response->items->expire,
-        ];
-    }
 }

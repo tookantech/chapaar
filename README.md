@@ -77,7 +77,6 @@ $message = (new SmsMessage())->driver()
 $response = Chapaar::send($message);
 
 ```
-
 Sending With Template Message
 ```php
 use TookanTech\Chapaar\Facades\Chapaar;
@@ -112,6 +111,13 @@ $message =(new SmsMessage())
 $response = Chapaar::verify($message);
 
 ```
+
+Get Latest Outbox messages
+it automatically get the latest sent messages for default driver
+```php
+$response = Chapaar::outbox(100);
+```
+
 ## Using In Notifications
 Please review [laravel notifications](https://laravel.com/docs/10.x/notifications) on how use notifications in laravel.
 
