@@ -42,7 +42,7 @@ trait HasResponse
         return $json_response;
     }
 
-    public function generateAccountResponse($credit,$expire_date): object
+    public function generateAccountResponse($credit, $expire_date): object
     {
         return (object) [
             'credit' => $credit,
@@ -50,10 +50,10 @@ trait HasResponse
         ];
     }
 
-    public function generateReportResponse($message_id,$receptor,$content,$sent_date,$line_number,$cost): object
+    public function generateReportResponse($message_id, $receptor, $content, $sent_date, $line_number, $cost): object
     {
 
-        return (object)[
+        return (object) [
             'message_id' => $message_id,
             'receptor' => $receptor,
             'content' => $content,

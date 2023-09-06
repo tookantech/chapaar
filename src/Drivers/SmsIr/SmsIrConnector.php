@@ -80,21 +80,21 @@ class SmsIrConnector implements DriverConnector
         $response = $this->client->get($url);
         $response = $this->processApiResponse($response);
 
-        return $this->generateAccountResponse($response->data,0);
+        return $this->generateAccountResponse($response->data, 0);
     }
 
     /**
      * @throws GuzzleException
      */
-    public function outbox($page_size = 100,$page_number = 1): object
+    public function outbox($page_size = 100, $page_number = 1): object
     {
-        $url = self::endpoint('send','live') . "?PageSize=$page_size&PageNumber=$page_number";
+        $url = self::endpoint('send', 'live')."?PageSize=$page_size&PageNumber=$page_number";
 
         $response = $this->client->get($url);
         $response = $this->processApiResponse($response);
 
-        return collect($response->data)->map(function ($item){
-            return $this->generateReportResponse($item->messageId,$item->mobile,$item->messageText,$item->sendDateTime,$item->lineNumber,$item->cost);
+        return collect($response->data)->map(function ($item) {
+            return $this->generateReportResponse($item->messageId, $item->mobile, $item->messageText, $item->sendDateTime, $item->lineNumber, $item->cost);
         });
     }
 

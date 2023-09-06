@@ -84,16 +84,20 @@ class KavenegarConnector implements DriverConnector
         $url = self::endpoint(self::$setting->api_key, 'account', 'info.json');
         $response = $this->performApi($url);
         $entries = $response->entries;
-        return $this->generateAccountResponse($entries->remaincredit,$entries->expiredate);
+
+        return $this->generateAccountResponse($entries->remaincredit, $entries->expiredate);
     }
-    public function outbox($page_size = 100,$page_number = 1): object
+
+    public function outbox($page_size = 100, $page_number = 1): object
     {
-        $url = self::endpoint(self::$setting->api_key, 'sms', 'latestoutbox.json') . "?pagesize=$page_size";
+        $url = self::endpoint(self::$setting->api_key, 'sms', 'latestoutbox.json')."?pagesize=$page_size";
         $response = $this->performApi($url);
-        return collect($response->entries)->map(function ($item){
-            return $this->generateReportResponse($item->message_id,$item->receptor,$item->message,$item->date,$item->sender,$item->cost);
+
+        return collect($response->entries)->map(function ($item) {
+            return $this->generateReportResponse($item->message_id, $item->receptor, $item->message, $item->date, $item->sender, $item->cost);
         });
     }
+
     /**
      * @throws HttpException|ApiException|GuzzleException
      */

@@ -8,7 +8,6 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class ChapaarServiceProvider extends PackageServiceProvider
 {
-
     public function packageBooted()
     {
         Notification::extend('sms', function ($app) {

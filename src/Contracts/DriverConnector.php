@@ -19,12 +19,11 @@ interface DriverConnector
 
     public function verify($message);
 
-    public function outbox($page_size = 100,$page_number = 1): object;
+    public function outbox($page_size = 100, $page_number = 1): object;
 
     public function generateResponse(int $status, string $message, array $data = null): object;
 
-    public function generateAccountResponse($credit,$expire_date): object;
+    public function generateAccountResponse($credit, $expire_date): object;
 
-    public function generateReportResponse($message_id,$receptor,$content,$sent_date,$line_number,$cost): object;
-
+    public function generateReportResponse($message_id, $receptor, $content, $sent_date, $line_number, $cost): object;
 }
