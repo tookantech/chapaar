@@ -22,11 +22,9 @@ class Chapaar
 
     public function getDefaultDriver(): DriverConnector
     {
-
         $connector = Drivers::tryFrom(config('chapaar.default'))->connector();
 
         return new $connector;
-
     }
 
     public function send($message): object
@@ -42,5 +40,10 @@ class Chapaar
     public function account(): object
     {
         return $this->driver->account();
+    }
+
+    public function outbox(int $page_size = 100, int $page_number = 1): object
+    {
+        return $this->driver->outbox($page_size, $page_number);
     }
 }

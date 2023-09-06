@@ -41,4 +41,26 @@ trait HasResponse
 
         return $json_response;
     }
+
+    public function generateAccountResponse($credit, $expire_date): object
+    {
+        return (object) [
+            'credit' => $credit,
+            'expire_date' => $expire_date,
+        ];
+    }
+
+    public function generateReportResponse($message_id, $receptor, $content, $sent_date, $line_number, $cost): object
+    {
+
+        return (object) [
+            'message_id' => $message_id,
+            'receptor' => $receptor,
+            'content' => $content,
+            'sent_date' => $sent_date,
+            'line_number' => $line_number,
+            'cost' => $cost,
+
+        ];
+    }
 }
