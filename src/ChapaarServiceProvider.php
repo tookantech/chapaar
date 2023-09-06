@@ -8,16 +8,15 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class ChapaarServiceProvider extends PackageServiceProvider
 {
-    public function configurePackage(Package $package): void
+    public function packageBooted()
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
         Notification::extend('sms', function ($app) {
             return new SmsChannel();
         });
+    }
+
+    public function configurePackage(Package $package): void
+    {
         $package
             ->name('chapaar')
             ->hasTranslations()
