@@ -77,7 +77,12 @@ class SmsIrMessage implements DriverMessage
 
     public function setTokens(array $tokens): self
     {
-        $this->tokens = $tokens;
+        $token_array = [];
+        foreach ($tokens as $key => $token) {
+            $token_array[] = ['name' => $key, 'value' => $token];
+        }
+
+        $this->tokens = $token_array;
 
         return $this;
     }
