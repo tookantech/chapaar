@@ -87,15 +87,21 @@ $message =(new SmsMessage())
     ->driver()
     ->setTemplate("invoice-paid")
     ->setTo('09121111111')
-    ->setTokens(['123','456','789']);
+    ->setTokens([
+        '123', // token
+        '456', // token2
+        '789', // token3
+        '111', // token10, with 4 space
+        '222', // token20, with 8 space
+    ]);
     
 # SmsIr
 $message =(new SmsMessage())
     ->driver()
-    ->setTemplate('100000')
+    ->setTemplate('invoice-paid')
     ->setTo('09121111111')
     ->setTokens([
-        ['name' => 'code' , 'value' => '123']
+        'code' => '123' // 'variable_name' => 'value'
     ]);
     
 # Ghasedak
@@ -104,8 +110,8 @@ $message =(new SmsMessage())
     ->setTemplate("invoice-paid")
     ->setTo('09121111111')
     ->setTokens([
-      'param1' => 'test1',
-      'param2' => 'test2'
+        'test1', // param1
+        'test2'  // param2
     ]);
 
 $response = Chapaar::verify($message);
