@@ -86,7 +86,7 @@ class GhasedakMessage implements DriverMessage
     {
         $token_array = [];
         foreach ($tokens as $key => $token) {
-            $key_name               = is_numeric($key) ? sprintf('param%s', $key + 1) : $key;
+            $key_name = is_numeric($key) ? sprintf('param%s', $key + 1) : $key;
             $token_array[$key_name] = $token;
         }
 

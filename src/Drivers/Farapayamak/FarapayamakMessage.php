@@ -16,7 +16,6 @@ class FarapayamakMessage implements DriverMessage
 
     protected array $tokens = [];
 
-
     protected bool $flash = false;
 
     /**
@@ -78,12 +77,13 @@ class FarapayamakMessage implements DriverMessage
 
     public function getTokens(): string
     {
-        return implode(';',$this->tokens);
+        return implode(';', $this->tokens);
     }
 
     public function setTokens(array $tokens): self
     {
         $this->tokens = $tokens;
+
         return $this;
     }
 

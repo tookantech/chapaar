@@ -18,7 +18,6 @@ enum Drivers: string
     case GHASEDAK = 'ghasedak';
     case FARAPAYAMAK = 'farapayamak';
 
-
     public function connector(): string
     {
         return match ($this) {

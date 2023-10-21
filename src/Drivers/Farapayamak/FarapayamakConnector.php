@@ -67,7 +67,7 @@ class FarapayamakConnector implements DriverConnector
             'password' => $this->setting->password,
             'text' => $message->getTokens(),
             'to' => $message->getTo(),
-            'bodyId' => $message->getTemplate()
+            'bodyId' => $message->getTemplate(),
         ];
 
         $response = $this->performApi($url, $params);
