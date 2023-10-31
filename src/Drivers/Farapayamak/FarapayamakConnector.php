@@ -23,18 +23,16 @@ class FarapayamakConnector implements DriverConnector
         self::$setting = (object) config('chapaar.drivers.farapayamak');
         $this->client = new Client([
             'headers' => [
-                'Accept' => 'application/json',
-                'Content-Type' => 'application/json',
+                'Content-Type' => 'application/x-www-form-urlencoded',
                 'charset' => 'utf-8',
             ],
-            'verify' => false,
             'http_errors' => false,
         ]);
 
     }
 
     /**
-     * @param  GhasedakMessage  $message
+     * @param  FarapayamakMessage  $message
      *
      * @throws GuzzleException
      */
@@ -42,8 +40,6 @@ class FarapayamakConnector implements DriverConnector
     {
         $url = self::endpoint('SendSMS');
         $params = [
-            'username' => $this->setting->username,
-            'password' => $this->setting->password,
             'from' => $message->getFrom(),
             'to' => $message->getTo(),
             'text' => $message->getContent(),
@@ -51,11 +47,11 @@ class FarapayamakConnector implements DriverConnector
         ];
         $response = $this->performApi($url, $params);
 
-        return $this->generateResponse($response->result->code, $response->result->message, (array) $response->items);
+        return $this->generateResponse($response->RetStatus, $response->Value, (array) $response->StrRetStatus);
     }
 
     /**
-     * @param  GhasedakMessage  $message
+     * @param  FarapayamakMessage  $message
      *
      * @throws GuzzleException
      */
@@ -63,8 +59,6 @@ class FarapayamakConnector implements DriverConnector
     {
         $url = self::endpoint('BaseServiceNumber');
         $params = [
-            'username' => $this->setting->username,
-            'password' => $this->setting->password,
             'text' => $message->getTokens(),
             'to' => $message->getTo(),
             'bodyId' => $message->getTemplate(),
@@ -72,7 +66,7 @@ class FarapayamakConnector implements DriverConnector
 
         $response = $this->performApi($url, $params);
 
-        return $this->generateResponse($response->result->code, $response->result->message, (array) $response->items);
+        return $this->generateResponse($response->result->RetStatus, $response->result->StrRetStatus, (array) $response->Value);
 
     }
 
@@ -81,12 +75,10 @@ class FarapayamakConnector implements DriverConnector
      */
     public function account(): object
     {
-        $url = self::endpoint('account', 'info');
+        $url = self::endpoint('GetCredit2');
         $response = $this->performApi($url);
 
-        $items = $response->items;
-
-        return $this->generateAccountResponse($items->balance, $items->expire);
+        return $this->generateAccountResponse($response->Value, 0);
     }
 
     /**
@@ -94,11 +86,16 @@ class FarapayamakConnector implements DriverConnector
      */
     public function outbox($page_size = 100, $page_number = 1): object
     {
-        $url = self::endpoint('sms', 'status');
-        $response = $this->performApi($url);
+        $url = self::endpoint('GetMessages');
+        $params = [
+            'location' => 2, // sent messages
+            'index' => 0,
+            'count' => 100
+        ];
+        $response = $this->performApi($url,$params);
 
-        return collect($response->items)->map(function ($item) {
-            return $this->generateReportResponse($item->messageid, $item->receptor, $item->message, $item->senddate, $item->sender, $item->price);
+        return collect($response->Data)->map(function ($item) {
+            return $this->generateReportResponse($item->MsgID, $item->Receiver, $item->Body, $item->SendDate, $item->Sender);
         });
     }
 
@@ -107,6 +104,11 @@ class FarapayamakConnector implements DriverConnector
      */
     public function performApi(string $url, array $params = []): object
     {
+
+        $params = [...$params,...[
+            'username' => $this->setting->username,
+            'password' => $this->setting->password,
+        ]];
         $response = $this->client->post($url, [
             'form_params' => $params,
         ]);
@@ -130,7 +132,7 @@ class FarapayamakConnector implements DriverConnector
             throw new HttpException('Response is not valid JSON', $status_code);
         }
 
-        if ($json_response->result->code !== Response::HTTP_OK) {
+        if ($json_response->result->RetStatus !== 1) {
             throw new ApiException($json_response->result->message, $json_response->result->code);
         }
     }
