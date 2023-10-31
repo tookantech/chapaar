@@ -4,7 +4,6 @@ namespace TookanTech\Chapaar\Drivers\Farapayamak;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Http\Response;
 use TookanTech\Chapaar\Contracts\DriverConnector;
 use TookanTech\Chapaar\Exceptions\ApiException;
 use TookanTech\Chapaar\Exceptions\HttpException;
@@ -90,9 +89,9 @@ class FarapayamakConnector implements DriverConnector
         $params = [
             'location' => 2, // sent messages
             'index' => 0,
-            'count' => 100
+            'count' => 100,
         ];
-        $response = $this->performApi($url,$params);
+        $response = $this->performApi($url, $params);
 
         return collect($response->Data)->map(function ($item) {
             return $this->generateReportResponse($item->MsgID, $item->Receiver, $item->Body, $item->SendDate, $item->Sender);
@@ -105,7 +104,7 @@ class FarapayamakConnector implements DriverConnector
     public function performApi(string $url, array $params = []): object
     {
 
-        $params = [...$params,...[
+        $params = [...$params, ...[
             'username' => $this->setting->username,
             'password' => $this->setting->password,
         ]];
