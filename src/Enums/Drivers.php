@@ -3,7 +3,7 @@
 namespace TookanTech\Chapaar\Enums;
 
 use TookanTech\Chapaar\Drivers\Farapayamak\FarapayamakConnector;
-use TookanTech\Chapaar\Drivers\Ghasedak\FarapayamakMessage;
+use TookanTech\Chapaar\Drivers\Farapayamak\FarapayamakMessage;
 use TookanTech\Chapaar\Drivers\Ghasedak\GhasedakConnector;
 use TookanTech\Chapaar\Drivers\Ghasedak\GhasedakMessage;
 use TookanTech\Chapaar\Drivers\Kavenegar\KavenegarConnector;

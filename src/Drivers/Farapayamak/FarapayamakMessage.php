@@ -1,6 +1,6 @@
 <?php
 
-namespace TookanTech\Chapaar\Drivers\Ghasedak;
+namespace TookanTech\Chapaar\Drivers\Farapayamak;
 
 use TookanTech\Chapaar\Contracts\DriverMessage;
 
