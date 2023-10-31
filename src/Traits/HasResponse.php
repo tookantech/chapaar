@@ -50,7 +50,7 @@ trait HasResponse
         ];
     }
 
-    public function generateReportResponse($message_id, $receptor, $content, $sent_date, $line_number, $cost): object
+    public function generateReportResponse($message_id, $receptor, $content, $sent_date, $line_number, $cost = null): object
     {
 
         return (object) [

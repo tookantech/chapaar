@@ -29,5 +29,12 @@ return [
             'api_key' => '',
             'line_number' => '',
         ],
+        // Configuration for the 'ghasedak' driver
+        'farapayamak' => [
+            'title' => 'chapaar::driver.farapayamak',
+            'url' => 'https://rest.payamak-panel.com/api/SendSMS/%s',
+            'username' => '',
+            'password' => '',
+        ],
     ],
 ];

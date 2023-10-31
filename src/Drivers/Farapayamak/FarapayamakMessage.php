@@ -1,10 +1,10 @@
 <?php
 
-namespace TookanTech\Chapaar\Drivers\Ghasedak;
+namespace TookanTech\Chapaar\Drivers\Farapayamak;
 
 use TookanTech\Chapaar\Contracts\DriverMessage;
 
-class GhasedakMessage implements DriverMessage
+class FarapayamakMessage implements DriverMessage
 {
     protected string $content = '';
 
@@ -12,13 +12,11 @@ class GhasedakMessage implements DriverMessage
 
     protected string $to = '';
 
-    protected string $template = '';
-
-    protected ?string $check_id = null;
+    protected int $template = 0;
 
     protected array $tokens = [];
 
-    protected ?string $date = null;
+    protected bool $flash = false;
 
     /**
      * @var int Set 1 to send text message and 2 to send voice message.
@@ -65,7 +63,7 @@ class GhasedakMessage implements DriverMessage
         return $this;
     }
 
-    public function getTemplate(): string
+    public function getTemplate(): int
     {
         return $this->template;
     }
@@ -77,51 +75,25 @@ class GhasedakMessage implements DriverMessage
         return $this;
     }
 
-    public function getTokens(): array
+    public function getTokens(): string
     {
-        return $this->tokens;
+        return implode(';', $this->tokens);
     }
 
     public function setTokens(array $tokens): self
     {
-        $token_array = [];
-        foreach ($tokens as $key => $token) {
-            $key_name = is_numeric($key) ? sprintf('param%s', $key + 1) : $key;
-            $token_array[$key_name] = $token;
-        }
-
-        $this->tokens = $token_array;
+        $this->tokens = $tokens;
 
         return $this;
     }
 
-    public function getCheckId(): ?string
+    public function isFlash(): bool
     {
-        return $this->check_id;
+        return $this->flash;
     }
 
-    public function setCheckId(string $check_id): void
+    public function setFlash(bool $flash): void
     {
-        $this->check_id = $check_id;
-    }
-
-    public function getType(): int
-    {
-        return $this->type;
-    }
-
-    public function setType(int $type): void
-    {
-        $this->type = $type;
-    }
-
-    public function getDate(): ?string
-    {
-        return $this->date;
-    }
-
-    public function setDate(string $date): void
-    {
-        $this->date = $date;
+        $this->flash = $flash;
     }
 }
