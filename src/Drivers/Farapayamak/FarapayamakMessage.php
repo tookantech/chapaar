@@ -3,9 +3,12 @@
 namespace TookanTech\Chapaar\Drivers\Farapayamak;
 
 use TookanTech\Chapaar\Contracts\DriverMessage;
+use TookanTech\Chapaar\Enums\Drivers;
 
 class FarapayamakMessage implements DriverMessage
 {
+    public Drivers $driver = Drivers::FARAPAYAMAK;
+
     protected string $content = '';
 
     protected string $from = '';
@@ -95,5 +98,10 @@ class FarapayamakMessage implements DriverMessage
     public function setFlash(bool $flash): void
     {
         $this->flash = $flash;
+    }
+
+    public function getDriver(): Drivers
+    {
+        return $this->driver;
     }
 }

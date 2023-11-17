@@ -2,8 +2,12 @@
 
 namespace TookanTech\Chapaar\Contracts;
 
+use TookanTech\Chapaar\Enums\Drivers;
+
 interface DriverMessage
 {
+    public function getDriver(): Drivers;
+
     public function setFrom($from): self;
 
     public function getFrom();

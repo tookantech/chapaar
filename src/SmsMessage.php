@@ -7,17 +7,12 @@ use TookanTech\Chapaar\Enums\Drivers;
 
 class SmsMessage
 {
-    protected string $message_driver;
-
-    protected DriverMessage $driver;
-
-    public function __construct()
+    public function driver($driver = null): DriverMessage
     {
-        $this->message_driver = Drivers::tryFrom(config('chapaar.default'))->message();
-    }
+        $driver_message = $driver
+        ? Drivers::tryFrom($driver->value)->message()
+        : Drivers::tryFrom(config('chapaar.default'))->message();
 
-    public function driver(): DriverMessage
-    {
-        return new $this->message_driver;
+        return new $driver_message;
     }
 }
