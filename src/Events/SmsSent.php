@@ -11,7 +11,9 @@ class SmsSent
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $provider;
+
     public $recipientNumber;
+
     public $message;
 
     public function __construct($provider, $recipientNumber, $message)

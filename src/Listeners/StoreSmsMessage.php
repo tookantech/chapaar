@@ -2,10 +2,8 @@
 
 namespace TookanTech\Chapaar\Events;
 
-use TookanTech\Chapaar\Events\SmsSent;
-use TookanTech\Chapaar\Models\SmsMessage;
 use Illuminate\Contracts\Queue\ShouldQueue;
-
+use TookanTech\Chapaar\Models\SmsMessage;
 
 class StoreSmsMessage implements ShouldQueue
 {
