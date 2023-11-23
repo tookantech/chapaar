@@ -20,6 +20,7 @@ class ChapaarServiceProvider extends PackageServiceProvider
         $package
             ->name('chapaar')
             ->hasTranslations()
+            ->hasMigration('create_sms_messages_table')
             ->hasConfigFile();
     }
 }

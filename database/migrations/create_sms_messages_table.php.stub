@@ -1,0 +1,24 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up()
+    {
+        Schema::create('sms_messages', function (Blueprint $table) {
+             $table->id();
+            $table->string('provider'); // To store the provider name
+            $table->string('recipient_number'); // To store the recipient's phone number
+            $table->text('message'); // To store the SMS message
+            $table->timestamps();
+        });
+    }
+
+    public function down()
+    {
+       Schema::dropIfExists('sms_messages');
+    }
+};
