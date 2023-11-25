@@ -26,7 +26,7 @@ class Chapaar
     public function send($message): object
     {
         $response = $this->driver($message->getDriver())->send($message);
-        if(count($response)) {
+        if(config('chapaar.store_sms_messages') && count($response)) {
             SmsSent::dispatch($message->driver,$message,$response['status']);
         }
         return $response;
@@ -36,7 +36,7 @@ class Chapaar
     public function verify(DriverMessage $message): object
     {
         $response = $this->driver($message->getDriver())->verify($message);
-        if(count($response)) {
+        if(config('chapaar.store_sms_messages') && count($response)) {
             SmsSent::dispatch($message->getDriver(),$message,$response['status']);
         }
         return $response;

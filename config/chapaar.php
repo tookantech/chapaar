@@ -5,6 +5,10 @@ return [
     // Set the default driver for the Chapaar package
     'default' => env('CHAPAAR_DRIVER', 'kavenegar'),
 
+    // Whether Store sent datas to database
+
+    'store_sms_messages' => env('CHAPAAR_STORE_SMS_MESSAGES',false),
+
     // Define configurations for different drivers
     'drivers' => [
         // Configuration for the 'kavenegar' driver
