@@ -50,7 +50,7 @@ class KavenegarConnector implements DriverConnector
 
         $response = $this->performApi($url, $params);
 
-        return $this->generateResponse($response->return->status, $response->return->message, (array) $response->entries);
+        return $this->generateResponse($response->return->status, $response->return->message,$message->getDriver()->value, (array) $response->entries);
     }
 
     /**
@@ -73,7 +73,7 @@ class KavenegarConnector implements DriverConnector
 
         $response = $this->performApi($url, $params);
 
-        return $this->generateResponse($response->return->status, $response->return->message, (array) $response->entries);
+        return $this->generateResponse($response->return->status, $response->return->message,$message->getDriver()->value, (array) $response->entries);
     }
 
     /**
