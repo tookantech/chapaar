@@ -10,9 +10,10 @@ return new class extends Migration
     {
         Schema::create('sms_messages', function (Blueprint $table) {
              $table->id();
-            $table->string('provider'); // To store the provider name
-            $table->string('recipient_number'); // To store the recipient's phone number
-            $table->text('message'); // To store the SMS message
+            $table->string('provider'); 
+            $table->string('recipient_number');
+            $table->json('data')->nullable();
+            $table->tinyInteger('status');
             $table->timestamps();
         });
     }

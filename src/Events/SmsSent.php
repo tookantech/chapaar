@@ -11,13 +11,13 @@ class SmsSent
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $provider;
-    public $recipientNumber;
-    public $message;
+    public $data;
+    public $status;
 
-    public function __construct($provider, $recipientNumber, $message)
+    public function __construct($provider, $data, $status)
     {
         $this->provider = $provider;
-        $this->recipientNumber = $recipientNumber;
-        $this->message = $message;
+        $this->data = $data;
+        $this->status = $status;
     }
 }

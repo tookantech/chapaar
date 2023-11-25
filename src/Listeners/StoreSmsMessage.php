@@ -13,8 +13,8 @@ class StoreSmsMessage implements ShouldQueue
     {
         $smsMessage = new SmsMessage();
         $smsMessage->provider = $event->provider;
-        $smsMessage->recipient_number = $event->recipientNumber;
-        $smsMessage->message = $event->message;
+        $smsMessage->data = $event->data;
+        $smsMessage->status = $event->status;
         $smsMessage->save();
     }
 }
