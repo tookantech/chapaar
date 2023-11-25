@@ -1,18 +1,20 @@
 <?php
 
-namespace TookanTech\Chapaar\Events;
+namespace TookanTech\Chapaar\Listeners;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
 use TookanTech\Chapaar\Models\SmsMessage;
-
-class StoreSmsMessage implements ShouldQueue
+use TookanTech\Chapaar\Events\SmsSent;
+class StoreSmsMessage
 {
+
     public function handle(SmsSent $event)
     {
+
+        $response = $event->response;
         $smsMessage = new SmsMessage();
-        $smsMessage->provider = $event->provider;
-        $smsMessage->data = $event->data;
-        $smsMessage->status = $event->status;
+        $smsMessage->driver = $response->driver;
+        $smsMessage->data = $response->data;
+        $smsMessage->status = $response->status;
         $smsMessage->save();
     }
 }

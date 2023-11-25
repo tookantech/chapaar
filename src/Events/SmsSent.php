@@ -5,19 +5,16 @@ namespace TookanTech\Chapaar\Events;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use TookanTech\Chapaar\Contracts\DriverMessage;
 
 class SmsSent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $provider;
-    public $data;
-    public $status;
+    public $response;
 
-    public function __construct($provider, $data, $status)
+    public function __construct($response)
     {
-        $this->provider = $provider;
-        $this->data = $data;
-        $this->status = $status;
+        $this->response = $response;
     }
 }
