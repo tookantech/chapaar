@@ -8,12 +8,12 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('sms_messages', function (Blueprint $table) {
+        Schema::create(config('chapaar.table_name'), function (Blueprint $table) {
              $table->id();
-            $table->string('provider'); 
+            $table->string('provider');
             $table->string('recipient_number');
             $table->json('data')->nullable();
-            $table->tinyInteger('status');
+            $table->integer('status');
             $table->timestamps();
         });
     }
