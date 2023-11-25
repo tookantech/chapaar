@@ -11,7 +11,7 @@ Chapaar offers flexible message sending and verification through multiple SMS pr
 * [kavenegar.com](https://kavenegar.com/) (tested)
 * [sms.ir](https://sms.ir/) (tested)
 * [ghasedak.me](https://ghasedak.me/) (tested)
-* Farapayamk (coming soon)
+* [Farapayamk](https://farapayamak.ir/) (not tested)
 * Twillo (coming soon)
 
 
@@ -115,6 +115,22 @@ $message =(new SmsMessage())
     ]);
 
 $response = Chapaar::verify($message);
+
+```
+
+Sending Without using default driver
+```php
+use TookanTech\Chapaar\Facades\Chapaar;
+use TookanTech\Chapaar\SmsMessage;
+use TookanTech\Chapaar\Enums\Drivers;
+
+$message = (new SmsMessage())
+    ->driver(Drivers::SMSIR)
+    ->setFrom('12345678')
+    ->setTo('0912111111')
+    ->setContent('Hello, this is a test message.');
+
+$response = Chapaar::send($message);
 
 ```
 

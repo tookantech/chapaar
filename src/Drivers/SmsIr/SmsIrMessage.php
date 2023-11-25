@@ -3,9 +3,12 @@
 namespace TookanTech\Chapaar\Drivers\SmsIr;
 
 use TookanTech\Chapaar\Contracts\DriverMessage;
+use TookanTech\Chapaar\Enums\Drivers;
 
 class SmsIrMessage implements DriverMessage
 {
+    public Drivers $driver = Drivers::SMSIR;
+
     protected string $content = '';
 
     protected string $from = '';
@@ -95,5 +98,10 @@ class SmsIrMessage implements DriverMessage
     public function setDate(string $date): void
     {
         $this->date = $date;
+    }
+
+    public function getDriver(): Drivers
+    {
+        return $this->driver;
     }
 }

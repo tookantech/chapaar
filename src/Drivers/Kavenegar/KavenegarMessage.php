@@ -3,12 +3,15 @@
 namespace TookanTech\Chapaar\Drivers\Kavenegar;
 
 use TookanTech\Chapaar\Contracts\DriverMessage;
+use TookanTech\Chapaar\Enums\Drivers;
 
 /*
  * @method setTemplate
  */
 class KavenegarMessage implements DriverMessage
 {
+    public Drivers $driver = Drivers::KAVENEGAR;
+
     /**
      * The message type.
      */
@@ -125,5 +128,10 @@ class KavenegarMessage implements DriverMessage
         $this->date = $date;
 
         return $this;
+    }
+
+    public function getDriver(): Drivers
+    {
+        return $this->driver;
     }
 }
