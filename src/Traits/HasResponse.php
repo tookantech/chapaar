@@ -21,7 +21,7 @@ trait HasResponse
         return self::$setting;
     }
 
-    public function generateResponse(int $status, string $message,string $driver, $data = null): object
+    public function generateResponse(int $status, string $message, string $driver, $data = null): object
     {
         return (object) [
             'driver' => $driver,

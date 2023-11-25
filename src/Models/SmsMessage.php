@@ -16,6 +16,6 @@ class SmsMessage extends Model
 
     protected $casts = [
         'driver' => Drivers::class,
-        'data' => AsCollection::class
+        'data' => AsCollection::class,
     ];
 }

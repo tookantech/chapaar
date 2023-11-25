@@ -14,6 +14,7 @@ class ChapaarServiceProvider extends PackageServiceProvider
             return new SmsChannel();
         });
     }
+
     public function packageRegistered()
     {
         parent::packageRegistered();

@@ -2,11 +2,11 @@
 
 namespace TookanTech\Chapaar\Listeners;
 
-use TookanTech\Chapaar\Models\SmsMessage;
 use TookanTech\Chapaar\Events\SmsSent;
+use TookanTech\Chapaar\Models\SmsMessage;
+
 class StoreSmsMessage
 {
-
     public function handle(SmsSent $event)
     {
 
