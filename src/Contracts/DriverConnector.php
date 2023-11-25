@@ -21,7 +21,7 @@ interface DriverConnector
 
     public function outbox($page_size = 100, $page_number = 1): object;
 
-    public function generateResponse(int $status, string $message, array $data = null): object;
+    public function generateResponse(int $status, string $message, string $driver, array $data = null): object;
 
     public function generateAccountResponse($credit, $expire_date): object;
 

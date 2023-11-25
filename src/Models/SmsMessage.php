@@ -4,16 +4,18 @@ namespace TookanTech\Chapaar\Models;
 
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Model;
+use TookanTech\Chapaar\Enums\Drivers;
 
 class SmsMessage extends Model
 {
     protected $fillable = [
-        'provider',
+        'driver',
         'data',
         'status',
     ];
 
-    protected $cast = [
+    protected $casts = [
+        'driver' => Drivers::class,
         'data' => AsCollection::class
-    ]
+    ];
 }
