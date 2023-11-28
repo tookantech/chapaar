@@ -5,7 +5,7 @@ return [
     /*
      * Set the default driver for the Chapaar package
      */
-    'default' => env('CHAPAAR_DRIVER', 'kavenegar'),
+    'default' => env('CHAPAAR_DRIVER'),
 
     /*
      * This is the name of the table that will be created by the migration and
