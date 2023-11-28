@@ -15,11 +15,19 @@ class ChapaarServiceProvider extends PackageServiceProvider
         });
     }
 
+    public function packageRegistered()
+    {
+        parent::packageRegistered();
+
+        $this->app->register(EventServiceProvider::class);
+    }
+
     public function configurePackage(Package $package): void
     {
         $package
             ->name('chapaar')
             ->hasTranslations()
+            ->hasMigration('create_sms_messages_table')
             ->hasConfigFile();
     }
 }

@@ -48,7 +48,7 @@ class GhasedakConnector implements DriverConnector
         ];
         $response = $this->performApi($url, $params);
 
-        return $this->generateResponse($response->result->code, $response->result->message, (array) $response->items);
+        return $this->generateResponse($response->result->code, $response->result->message, $message->getDriver()->value, (array) $response->items);
     }
 
     /**
@@ -68,7 +68,7 @@ class GhasedakConnector implements DriverConnector
         $params = [...$params, ...$message->getTokens()];
         $response = $this->performApi($url, $params);
 
-        return $this->generateResponse($response->result->code, $response->result->message, (array) $response->items);
+        return $this->generateResponse($response->result->code, $response->result->message, $message->getDriver()->value, (array) $response->items);
 
     }
 

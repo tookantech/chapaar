@@ -1,11 +1,16 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Notification;
 use Mockery as m;
 use TookanTech\Chapaar\Tests\Database\Factories\UserFactory;
 use TookanTech\Chapaar\Tests\Notifications\InvoicePaid;
 
-beforeEach(fn () => config()->set('chapaar.default', 'smsir'));
+beforeEach(function () {
+    config()->set('chapaar.default', 'smsir');
+    $this->loadMigrationsFrom(__DIR__.'/../../Database/Migrations/');
+    Artisan::call('migrate');
+});
 afterEach(fn () => m::close());
 it('should send notification to the user', function () {
 

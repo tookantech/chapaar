@@ -5,6 +5,7 @@ namespace TookanTech\Chapaar;
 use TookanTech\Chapaar\Contracts\DriverConnector;
 use TookanTech\Chapaar\Contracts\DriverMessage;
 use TookanTech\Chapaar\Enums\Drivers;
+use TookanTech\Chapaar\Events\SmsSent;
 
 class Chapaar
 {
@@ -24,12 +25,21 @@ class Chapaar
 
     public function send($message): object
     {
-        return $this->driver($message->driver)->send($message);
+        $response = $this->driver($message->getDriver())->send($message);
+
+        SmsSent::dispatchIf(self::shouldStoreToSentMessage(), $response);
+
+        return $response;
+
     }
 
     public function verify(DriverMessage $message): object
     {
-        return $this->driver($message->getDriver())->verify($message);
+        $response = $this->driver($message->getDriver())->verify($message);
+
+        SmsSent::dispatchIf(self::shouldStoreToSentMessage(), $response);
+
+        return $response;
     }
 
     public function account(): object
@@ -50,6 +60,10 @@ class Chapaar
         : Drivers::tryFrom(config('chapaar.default'))->connector();
 
         return new $connector;
+    }
 
+    protected static function shouldStoreToSentMessage(): bool
+    {
+        return config('chapaar.status');
     }
 }

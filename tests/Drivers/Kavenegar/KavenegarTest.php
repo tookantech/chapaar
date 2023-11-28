@@ -21,7 +21,7 @@ it('should select kavenegar based on config', function () {
 });
 it('can send plain message', function () {
 
-    $expected_response = $this->generateResponse(Response::HTTP_OK, 'success');
+    $expected_response = $this->generateResponse(Response::HTTP_OK, 'success', 'kavenegar');
     // Arrange
     $mockedMessage = m::mock(KavenegarMessage::class);
     $connector = m::mock(KavenegarConnector::class);
@@ -49,7 +49,7 @@ it('can send with template', function () {
             ],
         ],
     ];
-    $expected_response = $this->generateResponse(Response::HTTP_OK, 'success', $expected_data);
+    $expected_response = $this->generateResponse(Response::HTTP_OK, 'success', 'kavenegar', $expected_data);
     $mockedMessage = m::mock(KavenegarMessage::class);
 
     $connector = m::mock(KavenegarConnector::class);
