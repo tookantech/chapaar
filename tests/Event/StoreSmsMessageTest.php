@@ -1,20 +1,14 @@
 <?php
 
-use GuzzleHttp\Psr7\Response as ApiResponse;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Event;
-use Mockery as m;
 use Symfony\Component\HttpFoundation\Response;
-use TookanTech\Chapaar\Drivers\Ghasedak\GhasedakConnector;
-use TookanTech\Chapaar\Drivers\Ghasedak\GhasedakMessage;
 use TookanTech\Chapaar\Enums\Drivers;
 use TookanTech\Chapaar\Events\SmsSent;
-use TookanTech\Chapaar\Exceptions\ApiException;
-use TookanTech\Chapaar\Listeners\StoreSmsMessage;
 use TookanTech\Chapaar\Models\SmsMessage;
 
-beforeEach(function (){
-   $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations/');
+beforeEach(function () {
+    $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations/');
     Artisan::call('migrate');
 });
 it('stores an sms message on sms sent event', function () {
@@ -33,6 +27,6 @@ it('stores an sms message on sms sent event', function () {
     // Assert: Check that a corresponding SmsMessage was stored in the database
     $this->assertDatabaseHas(SmsMessage::class, [
         'driver' => $response->driver,
-        'status' => $response->status
+        'status' => $response->status,
     ]);
 });

@@ -20,7 +20,7 @@ it('should select ghasedak based on config', function () {
 });
 it('can send plain message', function () {
 
-    $expected_response = $this->generateResponse(Response::HTTP_OK, 'ghasedak','success');
+    $expected_response = $this->generateResponse(Response::HTTP_OK, 'ghasedak', 'success');
     // Arrange
     $mockedMessage = m::mock(GhasedakMessage::class);
     $connector = m::mock(GhasedakConnector::class);
@@ -46,7 +46,7 @@ it('can send with template', function () {
             2578793735,
         ],
     ];
-    $expected_response = $this->generateResponse(Response::HTTP_OK, 'success', 'ghasedak',$expected_data);
+    $expected_response = $this->generateResponse(Response::HTTP_OK, 'success', 'ghasedak', $expected_data);
     $mockedMessage = m::mock(GhasedakMessage::class);
 
     $connector = m::mock(GhasedakConnector::class);

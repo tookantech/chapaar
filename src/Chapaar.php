@@ -27,7 +27,7 @@ class Chapaar
     {
         $response = $this->driver($message->getDriver())->send($message);
 
-        SmsSent::dispatchIf(self::shouldStoreToSentMessage(),$response);
+        SmsSent::dispatchIf(self::shouldStoreToSentMessage(), $response);
 
         return $response;
 
@@ -37,7 +37,7 @@ class Chapaar
     {
         $response = $this->driver($message->getDriver())->verify($message);
 
-        SmsSent::dispatchIf(self::shouldStoreToSentMessage(),$response);
+        SmsSent::dispatchIf(self::shouldStoreToSentMessage(), $response);
 
         return $response;
     }

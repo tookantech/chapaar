@@ -9,7 +9,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create(config('chapaar.table_name'), function (Blueprint $table) {
-             $table->id();
+            $table->id();
             $table->string('driver');
             $table->json('data')->nullable();
             $table->integer('status');
@@ -19,6 +19,6 @@ return new class extends Migration
 
     public function down()
     {
-       Schema::dropIfExists(config('chapaar.table_name'));
+        Schema::dropIfExists(config('chapaar.table_name'));
     }
 };

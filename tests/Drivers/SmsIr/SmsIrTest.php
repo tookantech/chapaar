@@ -21,7 +21,7 @@ it('should select smsir based on config', function () {
 });
 it('can send plain message', function () {
 
-    $expected_response = $this->generateResponse(Response::HTTP_OK, 'success','smsir');
+    $expected_response = $this->generateResponse(Response::HTTP_OK, 'success', 'smsir');
     $mockedMessage = m::mock(SmsIrMessage::class);
     $connector = m::mock(SmsIrConnector::class);
 
@@ -45,7 +45,7 @@ it('can send with template', function () {
             ],
         ],
     ];
-    $expected_response = $this->generateResponse(1, 'success','smsir', $expected_data);
+    $expected_response = $this->generateResponse(1, 'success', 'smsir', $expected_data);
 
     $mockedMessage = m::mock(SmsIrMessage::class);
     $connector = m::mock(SmsIrConnector::class);
