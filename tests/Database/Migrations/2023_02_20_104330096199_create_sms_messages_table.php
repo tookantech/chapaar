@@ -19,6 +19,6 @@ return new class extends Migration
 
     public function down()
     {
-       Schema::dropIfExists('sms_messages');
+       Schema::dropIfExists(config('chapaar.table_name'));
     }
 };

@@ -6,7 +6,11 @@ use TookanTech\Chapaar\SmsChannel;
 use TookanTech\Chapaar\Tests\Database\Factories\UserFactory;
 use TookanTech\Chapaar\Tests\Notifications\InvoicePaid;
 
-beforeEach(fn () => config()->set('chapaar.default', 'kavenegar'));
+beforeEach(function (){
+    config()->set('chapaar.default', 'kavenegar');
+    $this->loadMigrationsFrom(__DIR__.'/../../Database/Migrations/');
+    Artisan::call('migrate');
+});
 afterEach(fn () => m::close());
 it('can load custom notification channel', function () {
     $channel = Notification::channel('sms');

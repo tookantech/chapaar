@@ -26,9 +26,8 @@ class Chapaar
     public function send($message): object
     {
         $response = $this->driver($message->getDriver())->send($message);
-        if (config('chapaar.store_sms_messages')) {
-            SmsSent::dispatch($response);
-        }
+
+        SmsSent::dispatchIf(self::shouldStoreToSentMessage(),$response);
 
         return $response;
 
@@ -37,9 +36,8 @@ class Chapaar
     public function verify(DriverMessage $message): object
     {
         $response = $this->driver($message->getDriver())->verify($message);
-        if (config('chapaar.store_sms_messages')) {
-            SmsSent::dispatch($response);
-        }
+
+        SmsSent::dispatchIf(self::shouldStoreToSentMessage(),$response);
 
         return $response;
     }
@@ -62,6 +60,10 @@ class Chapaar
         : Drivers::tryFrom(config('chapaar.default'))->connector();
 
         return new $connector;
+    }
 
+    protected static function shouldStoreToSentMessage(): bool
+    {
+        return config('chapaar.status');
     }
 }
