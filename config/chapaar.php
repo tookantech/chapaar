@@ -19,6 +19,17 @@ return [
     'status' => false,
 
     /*
+     * Timeout if a server does not return a response in seconds.
+     */
+    'timeout' => env('CHAPAAR_TIMEOUT', 30),
+
+    /*
+     * Connect timeout in seconds.
+     */
+    'connect_timeout' => env('CHAPAAR_CONNECT_TIMEOUT', 0),
+
+
+    /*
      * Define configurations for different drivers
      */
     'drivers' => [
