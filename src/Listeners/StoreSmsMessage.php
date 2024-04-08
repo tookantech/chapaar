@@ -7,7 +7,7 @@ use TookanTech\Chapaar\Models\SmsMessage;
 
 class StoreSmsMessage
 {
-    public function handle(SmsSent $event)
+    public function handle(SmsSent $event): void
     {
 
         $response = $event->response;
