@@ -4,6 +4,7 @@ namespace TookanTech\Chapaar\Drivers\Ghasedak;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\RequestOptions;
 use Illuminate\Http\Response;
 use TookanTech\Chapaar\Contracts\DriverConnector;
 use TookanTech\Chapaar\Exceptions\ApiException;
@@ -22,11 +23,13 @@ class GhasedakConnector implements DriverConnector
     {
         self::$setting = (object) config('chapaar.drivers.ghasedak');
         $this->client = new Client([
-            'headers' => [
+            RequestOptions::HEADERS => [
                 'apikey' => self::$setting->api_key,
                 'cache-control' => 'no-cache',
                 'content-type' => 'application/x-www-form-urlencoded',
             ],
+            RequestOptions::TIMEOUT => config('chapaar.timeout'),
+            RequestOptions::CONNECT_TIMEOUT => config('chapaar.connect_timeout'),
         ]);
 
     }

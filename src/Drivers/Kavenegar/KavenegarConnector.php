@@ -4,6 +4,7 @@ namespace TookanTech\Chapaar\Drivers\Kavenegar;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\RequestOptions;
 use Symfony\Component\HttpFoundation\Response;
 use TookanTech\Chapaar\Contracts\DriverConnector;
 use TookanTech\Chapaar\Exceptions\ApiException;
@@ -19,13 +20,15 @@ class KavenegarConnector implements DriverConnector
     public function __construct()
     {
         $this->client = (new Client([
-            'headers' => [
+            RequestOptions::HEADERS => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/x-www-form-urlencoded',
                 'charset' => 'utf-8',
             ],
-            'verify' => false,
-            'http_errors' => false,
+            RequestOptions::VERIFY => false,
+            RequestOptions::HTTP_ERRORS => false,
+            RequestOptions::TIMEOUT => config('chapaar.timeout'),
+            RequestOptions::CONNECT_TIMEOUT => config('chapaar.connect_timeout'),
         ]));
         self::$setting = (object) config('chapaar.drivers.kavenegar');
     }

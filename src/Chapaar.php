@@ -53,7 +53,7 @@ class Chapaar
         return $this->driver()->outbox($page_size, $page_number);
     }
 
-    protected function driver(Drivers $driver = null): DriverConnector
+    protected function driver(?Drivers $driver = null): DriverConnector
     {
         $connector = $driver
         ? Drivers::tryFrom($driver->value)->connector()

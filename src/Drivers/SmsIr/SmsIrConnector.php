@@ -4,6 +4,7 @@ namespace TookanTech\Chapaar\Drivers\SmsIr;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\RequestOptions;
 use TookanTech\Chapaar\Contracts\DriverConnector;
 use TookanTech\Chapaar\Exceptions\ApiException;
 use TookanTech\Chapaar\Exceptions\HttpException;
@@ -19,11 +20,13 @@ class SmsIrConnector implements DriverConnector
     {
         self::$setting = (object) config('chapaar.drivers.smsir');
         $this->client = new Client([
-            'headers' => [
+            RequestOptions::HEADERS => [
                 'x-api-key' => self::$setting->api_key,
                 'Accept' => 'text/plain',
                 'Content-Type' => 'application/json',
             ],
+            RequestOptions::TIMEOUT => config('chapaar.timeout'),
+            RequestOptions::CONNECT_TIMEOUT => config('chapaar.connect_timeout'),
         ]);
 
     }
