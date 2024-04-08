@@ -28,7 +28,6 @@ return [
      */
     'connect_timeout' => env('CHAPAAR_CONNECT_TIMEOUT', 0),
 
-
     /*
      * Define configurations for different drivers
      */

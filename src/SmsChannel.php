@@ -32,7 +32,7 @@ class SmsChannel
 
     }
 
-    protected function driver(Drivers $driver = null): DriverConnector
+    protected function driver(?Drivers $driver = null): DriverConnector
     {
         $connector = $driver
         ? Drivers::tryFrom($driver->value)->connector()
