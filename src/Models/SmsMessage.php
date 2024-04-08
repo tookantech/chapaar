@@ -10,7 +10,6 @@ use TookanTech\Chapaar\Enums\Drivers;
  * @property Drivers $driver
  * @property AsCollection $data
  * @property-write  int $status
- *
  */
 class SmsMessage extends Model
 {
