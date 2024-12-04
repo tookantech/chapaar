@@ -51,9 +51,8 @@ trait HasResponse
         ];
     }
 
-    public function generateReportResponse($message_id, $receptor, $content, $sent_date, $line_number, $cost = null): object
+    public function generateReportResponse($message_id, $receptor, $content, $sent_date, $line_number, $cost = null, $status_text = null): object
     {
-
         return (object) [
             'message_id' => $message_id,
             'receptor' => $receptor,
@@ -61,7 +60,7 @@ trait HasResponse
             'sent_date' => $sent_date,
             'line_number' => $line_number,
             'cost' => $cost,
-
+            'status_text' => $status_text,
         ];
     }
 }
