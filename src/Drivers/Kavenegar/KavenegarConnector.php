@@ -97,7 +97,7 @@ class KavenegarConnector implements DriverConnector
         $response = $this->performApi($url);
 
         return collect($response->entries)->map(function ($item) {
-            return $this->generateReportResponse($item->message_id, $item->receptor, $item->message, $item->date, $item->sender, $item->cost);
+            return $this->generateReportResponse($item->messageid, $item->receptor, $item->message, $item->date, $item->sender, $item->cost, $item->statustext);
         });
     }
 
