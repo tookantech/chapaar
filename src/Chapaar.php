@@ -55,11 +55,11 @@ class Chapaar
 
     protected function driver(?Drivers $driver = null): DriverConnector
     {
-        $connector = $driver
-        ? Drivers::tryFrom($driver->value)->connector()
-        : Drivers::tryFrom(config('chapaar.default'))->connector();
+        if (is_null($driver)) {
+            $driver = Drivers::from(config('chapaar.default'));
+        }
 
-        return new $connector;
+        return new ($driver->connector());
     }
 
     protected static function shouldStoreToSentMessage(): bool
