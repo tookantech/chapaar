@@ -46,6 +46,9 @@ return [
             'url' => 'https://api.sms.ir/v1/',
             'api_key' => '',
             'line_number' => '',
+            'request_options' => [
+                 // \GuzzleHttp\RequestOptions::VERIFY => false,
+            ],
         ],
         /* Configuration for the 'ghasedak' driver */
         'ghasedak' => [
