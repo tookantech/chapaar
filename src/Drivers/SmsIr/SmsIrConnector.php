@@ -20,6 +20,7 @@ class SmsIrConnector implements DriverConnector
     {
         self::$setting = (object) config('chapaar.drivers.smsir');
         $this->client = new Client([
+            ...self::$setting->request_options ?? [],
             RequestOptions::HEADERS => [
                 'x-api-key' => self::$setting->api_key,
                 'Accept' => 'text/plain',
